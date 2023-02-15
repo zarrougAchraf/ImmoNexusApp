@@ -1,5 +1,6 @@
 package tn.devteam.immonexus.Entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -27,4 +28,10 @@ public class Advertising implements Serializable {
     private LocalDate endDate;
     private double cost;
 
+
+
+    @JsonIgnore
+    @ToString.Exclude
+    @ManyToOne
+    private Sponsors sponsors;
 }

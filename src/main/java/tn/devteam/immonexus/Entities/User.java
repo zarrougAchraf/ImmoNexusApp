@@ -1,13 +1,12 @@
 package tn.devteam.immonexus.Entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @ToString
@@ -33,7 +32,16 @@ public class User implements Serializable {
     private LocalDate lastLoginDateDispalay;
     private LocalDate joinDate;
 
-    private String[] roles; // Role_User{read, edit}, Role_Admin
-    private String[] authorities;
+   // private String[] roles; // Role_User{read, edit}, Role_Admin
+   // private String[] authorities;
     private boolean isActive;
-    private boolean isNotLocked;}
+    private boolean isNotLocked;
+
+    @JsonIgnore
+    @ToString.Exclude
+    @OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
+    private List<Sponsors> sponsorsList;
+
+
+}
+

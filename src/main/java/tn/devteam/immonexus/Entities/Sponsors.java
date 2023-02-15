@@ -1,13 +1,12 @@
 package tn.devteam.immonexus.Entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @ToString
@@ -27,5 +26,17 @@ public class Sponsors implements Serializable {
     private String logo;
     private LocalDate startDate;
     private  LocalDate endDate;
+
+
+    @JsonIgnore
+    @ToString.Exclude
+  @ManyToOne
+    private User user;
+
+    @JsonIgnore
+    @ToString.Exclude
+
+  @OneToMany(mappedBy = "sponsors",cascade = CascadeType.ALL)
+    private List<Advertising> advertisingList;
 
 }
