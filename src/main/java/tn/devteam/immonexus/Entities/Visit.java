@@ -1,5 +1,6 @@
 package tn.devteam.immonexus.Entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -20,4 +21,14 @@ public class Visit implements Serializable {
     @Embedded
     private Adresse adresse;
     private double duration;
+
+    @JsonIgnore
+    @ToString.Exclude
+    @ManyToOne
+    private User user;
+
+    @JsonIgnore
+    @ToString.Exclude
+    @ManyToOne
+    private Announcement announcement;
 }

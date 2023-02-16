@@ -20,7 +20,9 @@ public class PropertyValuation implements Serializable {
     private Adresse adress;
     private String message;
     private LocalDate constructionDate;
+    @Enumerated(EnumType.STRING)
     private REstatus status;
+    @Enumerated(EnumType.STRING)
     private RealEstateType propertyType;
 
 }

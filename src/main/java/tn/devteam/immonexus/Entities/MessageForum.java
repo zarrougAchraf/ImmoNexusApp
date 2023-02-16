@@ -1,11 +1,9 @@
 package tn.devteam.immonexus.Entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.io.Serializable;
 @Entity
 @ToString
@@ -20,5 +18,15 @@ public class MessageForum implements Serializable {
     private String content;
     private Integer likes;
     private Integer dislikes;
+
+    @JsonIgnore
+    @ToString.Exclude
+    @ManyToOne
+    private SubjectForum subjectForum;
+
+    @JsonIgnore
+    @ToString.Exclude
+    @ManyToOne
+    private User user;
 
 }

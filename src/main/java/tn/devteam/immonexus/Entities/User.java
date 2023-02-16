@@ -31,17 +31,61 @@ public class User implements Serializable {
     private LocalDate lastLoginDate;
     private LocalDate lastLoginDateDispalay;
     private LocalDate joinDate;
+/*
+    private String[] roles; // Role_User{read, edit}, Role_Admin
+    private String[] authorities;
+    */
 
-   // private String[] roles; // Role_User{read, edit}, Role_Admin
-   // private String[] authorities;
     private boolean isActive;
     private boolean isNotLocked;
 
     @JsonIgnore
     @ToString.Exclude
-    @OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "user")
     private List<Sponsors> sponsorsList;
 
+    @JsonIgnore
+    @ToString.Exclude
+    @OneToMany(mappedBy = "user")
+    private List<SubjectForum> subjectForumList;
 
+    @JsonIgnore
+    @ToString.Exclude
+    @OneToMany(mappedBy = "user")
+    private List<Announcement> announcementList;
+
+    @JsonIgnore
+    @ToString.Exclude
+    @OneToMany(mappedBy = "user")
+    private List<Visit> visitList;
+
+    @JsonIgnore
+    @ToString.Exclude
+    @OneToMany(mappedBy = "user")
+    private List<Scraping> scrapingList;
+
+    @JsonIgnore
+    @ToString.Exclude
+    @OneToMany
+    private List<Rating> ratingList;
+
+    @JsonIgnore
+    @ToString.Exclude
+    @OneToMany(mappedBy = "user")
+    private List<Claim> claimList;
+
+    @JsonIgnore
+    @ToString.Exclude
+    @OneToMany(mappedBy = "user")
+    private List<Mortgage> mortgageList;
+
+    @JsonIgnore
+    @ToString.Exclude
+    @ManyToMany
+    private List<GroupAuction> groupAuctionList;
+
+    @JsonIgnore
+    @ToString.Exclude
+    @OneToMany(mappedBy = "user")
+    private List<Affordability> affordabilityList;
 }
-

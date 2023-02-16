@@ -1,5 +1,6 @@
 package tn.devteam.immonexus.Entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -16,6 +17,7 @@ public class Mortgage implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idMortage;
     private String loanType;
+    @Enumerated(EnumType.STRING)
     private RealEstateType realEstateType;
     private double loanAmount;
     private double downPayment;
@@ -26,6 +28,11 @@ public class Mortgage implements Serializable {
     @Embedded
     private Adresse adresse;
     private double mensuelInvome;
+
+    @JsonIgnore
+    @ToString.Exclude
+    @ManyToOne
+    private User user;
 
 
 }

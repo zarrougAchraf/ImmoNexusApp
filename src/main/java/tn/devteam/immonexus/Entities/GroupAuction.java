@@ -1,12 +1,12 @@
 package tn.devteam.immonexus.Entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
+
 @Entity
 @ToString
 @Getter
@@ -19,4 +19,14 @@ public class GroupAuction implements Serializable {
     private Long idGroupAuction;
     private String name;
     private String description;
+
+    @JsonIgnore
+    @ToString.Exclude
+    @OneToMany(mappedBy = "groupAuction")
+    private List<Auction> auctionList;
+
+    @JsonIgnore
+    @ToString.Exclude
+    @ManyToMany
+    private List<User> userList;
 }

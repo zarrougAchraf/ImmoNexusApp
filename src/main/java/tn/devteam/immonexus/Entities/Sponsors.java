@@ -25,18 +25,14 @@ public class Sponsors implements Serializable {
     private String phoneNumber;
     private String logo;
     private LocalDate startDate;
-    private  LocalDate endDate;
-
-
+    private LocalDate endDate;
     @JsonIgnore
     @ToString.Exclude
-  @ManyToOne
-    private User user;
-
-    @JsonIgnore
-    @ToString.Exclude
-
-  @OneToMany(mappedBy = "sponsors",cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "sponsor")
     private List<Advertising> advertisingList;
+    @JsonIgnore
+    @ToString.Exclude
+    @ManyToOne
+    private User user;
 
 }

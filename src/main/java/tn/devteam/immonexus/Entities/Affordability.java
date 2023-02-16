@@ -1,11 +1,9 @@
 package tn.devteam.immonexus.Entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.io.Serializable;
 @Entity
 @ToString
@@ -24,6 +22,11 @@ public class Affordability implements Serializable {
     private double interestRate;
     private long loanTerme;
     private String insurance;
+
+    @JsonIgnore
+    @ToString.Exclude
+    @ManyToOne
+    private User user ;
 
 
 
