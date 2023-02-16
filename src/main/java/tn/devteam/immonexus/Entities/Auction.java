@@ -1,11 +1,9 @@
 package tn.devteam.immonexus.Entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
 
@@ -26,5 +24,10 @@ public class Auction implements Serializable {
     private double currentBidAmount;
     private double bidIncrement;
     private double minimBid;
+
+    @JsonIgnore
+    @ToString.Exclude
+    @ManyToOne
+    private GroupAuction groupAuction;
 
 }

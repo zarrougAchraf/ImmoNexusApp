@@ -27,4 +27,7 @@ public class Advertising implements Serializable {
     private LocalDate endDate;
     private double cost;
 
+    @ManyToOne
+    private Sponsors sponsor;
+
 }

@@ -1,13 +1,12 @@
 package tn.devteam.immonexus.Entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @ToString
@@ -32,8 +31,61 @@ public class User implements Serializable {
     private LocalDate lastLoginDate;
     private LocalDate lastLoginDateDispalay;
     private LocalDate joinDate;
-
+/*
     private String[] roles; // Role_User{read, edit}, Role_Admin
     private String[] authorities;
+    */
+
     private boolean isActive;
-    private boolean isNotLocked;}
+    private boolean isNotLocked;
+
+    @JsonIgnore
+    @ToString.Exclude
+    @OneToMany(mappedBy = "user")
+    private List<Sponsors> sponsorsList;
+
+    @JsonIgnore
+    @ToString.Exclude
+    @OneToMany(mappedBy = "user")
+    private List<SubjectForum> subjectForumList;
+
+    @JsonIgnore
+    @ToString.Exclude
+    @OneToMany(mappedBy = "user")
+    private List<Announcement> announcementList;
+
+    @JsonIgnore
+    @ToString.Exclude
+    @OneToMany(mappedBy = "user")
+    private List<Visit> visitList;
+
+    @JsonIgnore
+    @ToString.Exclude
+    @OneToMany(mappedBy = "user")
+    private List<Scraping> scrapingList;
+
+    @JsonIgnore
+    @ToString.Exclude
+    @OneToMany
+    private List<Rating> ratingList;
+
+    @JsonIgnore
+    @ToString.Exclude
+    @OneToMany(mappedBy = "user")
+    private List<Claim> claimList;
+
+    @JsonIgnore
+    @ToString.Exclude
+    @OneToMany(mappedBy = "user")
+    private List<Mortgage> mortgageList;
+
+    @JsonIgnore
+    @ToString.Exclude
+    @ManyToMany
+    private List<GroupAuction> groupAuctionList;
+
+    @JsonIgnore
+    @ToString.Exclude
+    @OneToMany(mappedBy = "user")
+    private List<Affordability> affordabilityList;
+}

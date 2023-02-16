@@ -1,5 +1,6 @@
 package tn.devteam.immonexus.Entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -19,4 +20,9 @@ public class Scraping implements Serializable {
     private double price;
     @Embedded
     private Adresse adress;
+
+    @JsonIgnore
+    @ToString.Exclude
+    @ManyToOne
+    private User user;
 }
