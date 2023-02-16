@@ -19,7 +19,7 @@ public class SubjectForum implements Serializable {
     private Long idSubjectForum;
     private String title;
     private String description;
-
+//bhhh
     @JsonIgnore
     @ToString.Exclude
     @ManyToOne
