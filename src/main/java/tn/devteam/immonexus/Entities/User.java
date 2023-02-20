@@ -5,7 +5,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -16,26 +16,22 @@ import java.util.List;
 @AllArgsConstructor
 public class User implements Serializable {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idUser;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(nullable = false, updatable = false)
+
+    private Long id;
     private String userId;
-    private Integer cin;
-    private Integer numeroTel;
-    private String adresse;
-    private String email;
-    private String firstname;
+    private String firstName;
     private String lastName;
     private String username;
     private String password;
+    private String email;
     private String profileImageUrl;
-    private LocalDate lastLoginDate;
-    private LocalDate lastLoginDateDispalay;
-    private LocalDate joinDate;
-/*
-    private String[] roles; // Role_User{read, edit}, Role_Admin
+    private Date lastLoginDate;
+    private Date lastLoginDateDisplay;
+    private Date joinDate;
+    private String role; //ROLE_USER{ read, edit }, ROLE_ADMIN {delete}
     private String[] authorities;
-    */
-
     private boolean isActive;
     private boolean isNotLocked;
 

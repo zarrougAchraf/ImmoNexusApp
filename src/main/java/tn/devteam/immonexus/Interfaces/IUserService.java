@@ -1,15 +1,19 @@
 package tn.devteam.immonexus.Interfaces;
 
 import tn.devteam.immonexus.Entities.User;
+import tn.devteam.immonexus.exception.domain.EmailExistException;
+import tn.devteam.immonexus.exception.domain.UserNotFoundException;
+import tn.devteam.immonexus.exception.domain.UsernameExistException;
 
 import java.util.List;
 
 public interface IUserService {
-    void removeById(Long userId);
 
-    User addUser(User user);
+    User register(String firstName, String lastName, String username, String email) throws UserNotFoundException, UsernameExistException, EmailExistException;
 
-    void removeAll();
+    List<User> getUsers();
 
-    List<User> allUsers();
+    User findUserByUsername(String username);
+
+    User findUserByEmail(String email);
 }

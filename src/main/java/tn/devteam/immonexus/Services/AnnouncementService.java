@@ -49,11 +49,5 @@ public class AnnouncementService implements IAnnouncementService {
     public void removeAll() {
         announcementRepository.deleteAll();
     }
-@Override
-    public void affectAnnouncetoUser(Long idAnnonce, String firstName, String lastName) {
-        Announcement announcement = announcementRepository.findById(idAnnonce).orElse(null);
-        User user = userRepository.findByFirstnameLikeAndLastNameLike(firstName, lastName);
-        announcement.setUser(user);
-        announcementRepository.save(announcement);
-    }
+
 }
