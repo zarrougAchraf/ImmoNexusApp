@@ -18,18 +18,38 @@ public class Advertising implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idAd;
     private String title;
-    @Lob
+   /* @Lob
     private byte[] image;
     @Lob
-    private byte[] video;
+    private byte[] video;*/
+   @Enumerated(EnumType.STRING)
+   private PubType type;
     private String description;
-    private String name;
+    private String nom;
     private LocalDate startDate;
     private LocalDate endDate;
     private double cost;
+    @Enumerated(EnumType.STRING)
+    private Canaux canaux;
+
+    private double nbrVuesCible;
+    private double nbrVuesFinal;
+
+
+
+
+    @JsonIgnore
+    @ToString.Exclude
+    @OneToOne(mappedBy = "advertising")
+    private PopulationCible  populationCible;
 @JsonIgnore
 @ToString.Exclude
     @ManyToOne
     private Sponsors sponsor;
+
+
+
+
+
 
 }
