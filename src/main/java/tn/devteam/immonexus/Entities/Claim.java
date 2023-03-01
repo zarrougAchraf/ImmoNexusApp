@@ -16,10 +16,11 @@ import java.util.Date;
 @AllArgsConstructor
 public class Claim implements Serializable {
     @Id
-    @GeneratedValue (strategy = GenerationType.IDENTITY)
+    @GeneratedValue (strategy = GenerationType.AUTO)
+    @Column(nullable = false, updatable = false)
+
     private Long id;
     @Enumerated(EnumType.STRING)
-    @NotNull
     private ReclamationType type;
     private String description;
     @Temporal(TemporalType.TIMESTAMP)
@@ -32,8 +33,6 @@ public class Claim implements Serializable {
     private User user;
 
     @OneToOne
-    @ToString.Exclude
     @JsonIgnore
     private ReponseRec reponseReclamation;
-
 }
