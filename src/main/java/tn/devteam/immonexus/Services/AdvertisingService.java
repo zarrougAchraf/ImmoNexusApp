@@ -10,6 +10,7 @@ import tn.devteam.immonexus.Repository.AdevertisingRepository;
 import tn.devteam.immonexus.Repository.PopulationCibleRepository;
 import tn.devteam.immonexus.Repository.SponsorsRepository;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -26,6 +27,28 @@ public class AdvertisingService implements IAdvertisingService {
     Simplex simplexx;
 
     @Override
+public String nbrAdvertisingsBySponsor(){
+
+      List<Sponsors> sponsorsList =sponsorsRepository.findAll();
+
+        int n = 0;
+        Sponsors sponsors = new Sponsors();
+
+        for (Sponsors s : sponsorsList){
+            for (Sponsors sp : sponsorsList) {
+                   if (sp.getAdvertisingList().size()>s.getAdvertisingList().size()) {
+                       n=sp.getAdvertisingList().size();
+                       sponsors=sp;
+                       log.info("fdfg"+n);
+                   }
+                }
+
+        }
+        return("le sponsor qui a plusieurs pub "+sponsors.getName()+"a comme nbr"+ n) ;
+    }
+
+
+    @Override
     public Advertising addAdvertising(Advertising ad){
 
 
@@ -36,6 +59,14 @@ public class AdvertisingService implements IAdvertisingService {
     {
 
         return adevertisingRepository.findAll();
+    }
+
+    @Override
+    public List<Advertising> getAllActualAdvertising(LocalDate startDate, LocalDate endDate){
+
+    //    if()
+        return adevertisingRepository.findByStartDateGreaterThanEqualAndEndDateLessThanEqual(startDate, endDate);
+
     }
     @Override
     public Advertising getAdvertisingById(Long idAd)

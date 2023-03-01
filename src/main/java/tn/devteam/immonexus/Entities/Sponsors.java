@@ -26,6 +26,7 @@ public class Sponsors implements Serializable {
     private String logo;
     private LocalDate startDate;
     private LocalDate endDate;
+
     @JsonIgnore
     @ToString.Exclude
     @OneToMany(mappedBy = "sponsor")

@@ -1,12 +1,19 @@
 package tn.devteam.immonexus.Controllers;
 
 import lombok.AllArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import tn.devteam.immonexus.Entities.Advertising;
-import tn.devteam.immonexus.Entities.PopulationCible;
 import tn.devteam.immonexus.Interfaces.IAdvertisingService;
 
+import java.io.IOException;
+import java.time.LocalDate;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @AllArgsConstructor
@@ -18,6 +25,23 @@ public class AdvertisingController {
 
         return iAdvertisingService.addAdvertising(ad);
     }
+   /* @PostMapping("/upload")
+    public Advertising handleFileUpload(@RequestParam("file") MultipartFile file) {
+        try {
+            Advertising advertising = new Advertising ();
+
+            //newUser.setAdresse ("Tunis");
+            //newUser.setEmail ("user@gmail.com");
+            //newUser.setImage (file.getBytes());
+            advertising.setDescription("fffff");
+            advertising.setImage (file.getBytes());
+            iAdvertisingService.addAdvertising (advertising);
+            return advertising;
+        } catch (IOException e) {
+            e.printStackTrace ();
+            throw new RuntimeException (e);
+        }
+    }*/
 
     @GetMapping("/get-AllAdvertising")
     public List<Advertising> getAllAdvertising(){
@@ -25,6 +49,26 @@ public class AdvertisingController {
         return iAdvertisingService.getAllAdvertising();
 
     }
+/*
+    @GetMapping("/get-All-Actual-Advertising/{start}/{end}")
+    public ResponseEntity<?> getAllActualAdvertising(@RequestParam("start") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
+                                                          @RequestParam("end") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate){
+
+        List<Advertising> advertisings = iAdvertisingService.getAllActualAdvertising(startDate, endDate);
+
+      //  return iAdvertisingService.getAllActualAdvertising(startDate,endDate);
+
+        if (advertisings.isEmpty()) {
+            Map<String, String> message = new HashMap<>();
+            message.put("message", "Aucune publicité trouvée pour les dates spécifiées");
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(message);
+
+
+        } else {
+            return ResponseEntity.ok(advertisings);
+        }
+
+    }*/
 
     @GetMapping("/get-Advertising-ById/{idA}")
     public Advertising getAdvertisingById(@PathVariable("idA") Long idAd)
@@ -113,8 +157,10 @@ return  iAdvertisingService.tarifPubParProfession(idPop);
 
     }
 
-
-
+    @GetMapping("/nbrAdvertisingsBySponsor")
+    public String nbrAdvertisingsBySponsor() {
+        return iAdvertisingService.nbrAdvertisingsBySponsor();
+    }
 
 
 

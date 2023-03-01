@@ -3,9 +3,12 @@ package tn.devteam.immonexus.Interfaces;
 import tn.devteam.immonexus.Entities.Advertising;
 import tn.devteam.immonexus.Entities.PopulationCible;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public interface IAdvertisingService {
+    String nbrAdvertisingsBySponsor();
+
     Advertising addAdvertising(Advertising ad);
 
     List<Advertising> getAllAdvertising();
@@ -34,4 +37,6 @@ public interface IAdvertisingService {
 
 
 
+
+    List<Advertising> getAllActualAdvertising(LocalDate startDate, LocalDate endDate);
 }

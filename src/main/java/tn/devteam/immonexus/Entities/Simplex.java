@@ -189,7 +189,7 @@ public class Simplex {
                         slack = 1;
                         break;
                     default:
-                }
+                 }
                 a[i][numberOfOriginalVariables + i] = slack;
             }
 
