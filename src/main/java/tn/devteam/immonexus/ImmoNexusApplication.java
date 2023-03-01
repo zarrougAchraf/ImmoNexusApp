@@ -10,4 +10,6 @@ public class ImmoNexusApplication {
         SpringApplication.run(ImmoNexusApplication.class, args);
     }
 
+
+
 }

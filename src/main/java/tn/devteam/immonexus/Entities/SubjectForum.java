@@ -19,7 +19,9 @@ public class SubjectForum implements Serializable {
     private Long idSubjectForum;
     private String title;
     private String description;
-//bhhh
+    @Lob
+    private byte[] image;
+
     @JsonIgnore
     @ToString.Exclude
     @ManyToOne
