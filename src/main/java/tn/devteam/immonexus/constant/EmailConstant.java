@@ -1,9 +1,9 @@
-package tn.devteam.immonexus.constant;
+package tn.devteam.immonexus.Constant;
 
 public class EmailConstant {
     public static final String SIMPLE_MAIL_TRANSFER_PROTOCOL = "smtps";
     public static final String USERNAME = "mahdi.zgolli@esprit.tn";
-    public static final String PASSWORD = "bywcqzvctkvsetrt";
+    public static final String PASSWORD = "dqxzjjsodjexaiax";
     public static final String FROM_EMAIL = "support@getarrays.com";
     public static final String CC_EMAIL = "";
     public static final String EMAIL_SUBJECT = "Get Arrays, LLC - New Password";

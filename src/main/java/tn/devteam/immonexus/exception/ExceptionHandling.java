@@ -1,4 +1,4 @@
-package tn.devteam.immonexus.exception;
+package tn.devteam.immonexus.Exception;
 
 import com.auth0.jwt.exceptions.TokenExpiredException;
 import org.slf4j.Logger;
@@ -16,16 +16,14 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import tn.devteam.immonexus.Entities.HttpResponse;
-import tn.devteam.immonexus.exception.domain.EmailExistException;
-import tn.devteam.immonexus.exception.domain.EmailNotFoundException;
-import tn.devteam.immonexus.exception.domain.UserNotFoundException;
-import tn.devteam.immonexus.exception.domain.UsernameExistException;
+import tn.devteam.immonexus.Exception.domain.*;
 
 import javax.persistence.NoResultException;
 import java.io.IOException;
 import java.util.Objects;
 
 import static org.springframework.http.HttpStatus.*;
+import static org.springframework.http.HttpStatus.NOT_FOUND;
 
 @RestControllerAdvice
 public class ExceptionHandling implements ErrorController {
@@ -101,6 +99,12 @@ public class ExceptionHandling implements ErrorController {
         return createHttpResponse(INTERNAL_SERVER_ERROR, INTERNAL_SERVER_ERROR_MSG);
     }
 
+    @ExceptionHandler(NotAnImageFileException.class)
+    public ResponseEntity<HttpResponse> notAnImageFileException(NotAnImageFileException exception) {
+        LOGGER.error(exception.getMessage());
+        return createHttpResponse(BAD_REQUEST, exception.getMessage());
+    }
+
     @ExceptionHandler(NoResultException.class)
     public ResponseEntity<HttpResponse> notFoundException(NoResultException exception) {
         LOGGER.error(exception.getMessage());
@@ -115,7 +119,7 @@ public class ExceptionHandling implements ErrorController {
 
     private ResponseEntity<HttpResponse> createHttpResponse(HttpStatus httpStatus, String message) {
         return new ResponseEntity<>(new HttpResponse(httpStatus.value(), httpStatus,
-                httpStatus.getReasonPhrase().toUpperCase(), message.toUpperCase()), httpStatus);
+                httpStatus.getReasonPhrase().toUpperCase(), message), httpStatus);
     }
 
     @RequestMapping(ERROR_PATH)
