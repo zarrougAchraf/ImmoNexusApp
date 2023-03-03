@@ -37,6 +37,13 @@ public class User implements Serializable {
     private boolean isActive;
     private boolean isNotLocked;
 
+
+
+    @JsonIgnore
+    @ToString.Exclude
+    @OneToMany(mappedBy = "user")
+    private List<ReponseRec> ReponsRec;
+
     @JsonIgnore
     @ToString.Exclude
     @OneToMany(mappedBy = "user")
