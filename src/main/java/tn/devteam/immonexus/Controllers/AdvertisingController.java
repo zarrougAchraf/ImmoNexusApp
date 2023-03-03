@@ -25,23 +25,6 @@ public class AdvertisingController {
 
         return iAdvertisingService.addAdvertising(ad);
     }
-   /* @PostMapping("/upload")
-    public Advertising handleFileUpload(@RequestParam("file") MultipartFile file) {
-        try {
-            Advertising advertising = new Advertising ();
-
-            //newUser.setAdresse ("Tunis");
-            //newUser.setEmail ("user@gmail.com");
-            //newUser.setImage (file.getBytes());
-            advertising.setDescription("fffff");
-            advertising.setImage (file.getBytes());
-            iAdvertisingService.addAdvertising (advertising);
-            return advertising;
-        } catch (IOException e) {
-            e.printStackTrace ();
-            throw new RuntimeException (e);
-        }
-    }*/
 
     @GetMapping("/get-AllAdvertising")
     public List<Advertising> getAllAdvertising(){
@@ -49,26 +32,24 @@ public class AdvertisingController {
         return iAdvertisingService.getAllAdvertising();
 
     }
-/*
+
+
     @GetMapping("/get-All-Actual-Advertising/{start}/{end}")
     public ResponseEntity<?> getAllActualAdvertising(@RequestParam("start") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
-                                                          @RequestParam("end") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate){
+                                                     @RequestParam("end") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate){
 
         List<Advertising> advertisings = iAdvertisingService.getAllActualAdvertising(startDate, endDate);
 
-      //  return iAdvertisingService.getAllActualAdvertising(startDate,endDate);
-
-        if (advertisings.isEmpty()) {
-            Map<String, String> message = new HashMap<>();
-            message.put("message", "Aucune publicité trouvée pour les dates spécifiées");
-            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(message);
-
-
-        } else {
+        if (!advertisings.isEmpty()) {
             return ResponseEntity.ok(advertisings);
+        } else {
+            String message = "Aucune publicité trouvée pour les dates spécifiées";
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(message);
         }
+    }
 
-    }*/
+
+
 
     @GetMapping("/get-Advertising-ById/{idA}")
     public Advertising getAdvertisingById(@PathVariable("idA") Long idAd)
@@ -103,52 +84,6 @@ public class AdvertisingController {
         iAdvertisingService.affectAdvertisingToSponsor(idSponsor,idAd);
     }
 
-  /*  @PostMapping("/add-Publicite")
-    public String addPublicite(@RequestBody Advertising p ){
-        return iAdvertisingService.addPublicite(p);
-    }*/
-/*
-    @GetMapping("/get-AllPublicite")
-    public List<Advertising> getAllPublicite(){
-        return  iAdvertisingService.getAllPublicite();
-    }
-
-    @DeleteMapping("/delete-Pub-ById/{idPub}")
-
-    public void deletePub( @PathVariable("idPub") Long id){
-
-        iAdvertisingService.deletePub(id);
-    }*/
-
-    /*
-    @GetMapping("/get-testSimplex/{idAdv}")
-    public double testSimplex(@PathVariable("idAdv")Long id){
-     return    iAdvertisingService.testSimplex(id);
-    }
-
-    @GetMapping("/get-tarifPubCaneaux/{idPub}")
-    public double tarifPubCaneaux(@PathVariable("idPub") Long idPub) {
-        return iAdvertisingService.tarifPubCaneaux(idPub);
-    }
-
-    @GetMapping("/get-tarifPubParAge/{idPop}")
-
-    public double tarifPubParAge(@PathVariable("idPop") Long idPop) {
-        return iAdvertisingService.tarifPubParAge(idPop);
-    }
-
-    @GetMapping("/get-tarifPubParGender/{idPop}")
-
-    public double tarifPubParGender(@PathVariable("idPop") Long idPop) {
-return  iAdvertisingService.tarifPubParGender(idPop);
-    }
-
-
-    @GetMapping("/get-tarifPubParProfession/{idPop}")
-
-    public double tarifPubParProfession(@PathVariable("idPop")Long idPop) {
-return  iAdvertisingService.tarifPubParProfession(idPop);
-    }*/
 
     @GetMapping("/get-maxGain/{idAdv}")
 

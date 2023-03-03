@@ -20,23 +20,13 @@ public class Advertising implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idAd;
     private String title;
-   /* @Lob
-    private byte[] image;
-    @Lob
-    private byte[] video;*/
-   @Enumerated(EnumType.STRING)
-   private PubType type;
 
-  /*  @Lob
-    private byte[] image;*/
-
-
-    private String picture;
     private String description;
     private String nom;
     private LocalDate startDate;
     private LocalDate endDate;
     private double cost;
+
     @Enumerated(EnumType.STRING)
     private Canaux canaux;
 

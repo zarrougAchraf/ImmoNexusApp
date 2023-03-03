@@ -24,9 +24,6 @@ public interface IAdvertisingService {
     void affectAdvertisingToSponsor(Long idSponsor, Long idAd);
 
 
-   // public String addPublicite(Advertising p);
-   // public List<Advertising> getAllPublicite();
-   // public void deletePub(Long id);
     public double testSimplex(Long id) ;
     public double tarifPubCaneaux(Long idPub);
     public double tarifPubParAge(Long idPop);

@@ -64,9 +64,9 @@ public String nbrAdvertisingsBySponsor(){
     @Override
     public List<Advertising> getAllActualAdvertising(LocalDate startDate, LocalDate endDate){
 
-    //    if()
-        return adevertisingRepository.findByStartDateGreaterThanEqualAndEndDateLessThanEqual(startDate, endDate);
+        List<Advertising> advertisings = adevertisingRepository.findByStartDateGreaterThanEqualAndEndDateLessThanEqual(startDate, endDate);
 
+            return advertisings;
     }
     @Override
     public Advertising getAdvertisingById(Long idAd)
@@ -101,39 +101,6 @@ public String nbrAdvertisingsBySponsor(){
 
 // ******************************
 
- /*   @Override
-    public String addPublicite(Advertising p ) {
-        PopulationCible pc = p.getPopulationCible();
-                popRepo.save(pc);
-        Long idaddedpc = pc.getIdPop();
-log.info("id  : ");
-        adevertisingRepository.save(p);
-        Long idaddeedp = p.getIdAd();
-
-        PopulationCible pcaded= popRepo.findById(idaddedpc).orElse(null);
-
-        Advertising paded = adevertisingRepository.findById(idaddeedp).orElse(null);
-        pcaded.setAdvertising(paded);
-        paded.setPopulationCible(pcaded);
-        popRepo.save(pcaded);
-        adevertisingRepository.save(paded);
-
-
-
-        return "Publicite aded";
-    }*/
-/*
-    @Override
-    public List<Advertising> getAllPublicite() {
-
-        return (List<Advertising>)adevertisingRepository.findAll();
-    }
-
-    @Override
-    public void deletePub(Long id) {
-        adevertisingRepository.deleteById(id);
-
-    }*/
 
 
     // *****************************************************************************
