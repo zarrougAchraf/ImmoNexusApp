@@ -44,7 +44,7 @@ public String nbrAdvertisingsBySponsor(){
                 }
 
         }
-        return("le sponsor qui a plusieurs pub "+sponsors.getName()+"a comme nbr"+ n) ;
+        return("le sponsor qui a plusieurs publicites "+sponsors.getName()+"a comme nbr"+ n) ;
     }
 
 
@@ -54,6 +54,7 @@ public String nbrAdvertisingsBySponsor(){
 
         return adevertisingRepository.save(ad) ;
     }
+
     @Override
     public List<Advertising> getAllAdvertising()
     {
@@ -147,17 +148,6 @@ public String nbrAdvertisingsBySponsor(){
 
 // *****************************************************************************
 
- /*   @Override
-    public double tarifPubCaneaux(Advertising p) {
-        if(p.getCanaux()== Canaux.FACEBOOK)
-            return 10;
-        if(p.getCanaux()==Canaux.INSTAGRAM)
-            return 12;
-        if(p.getCanaux()==Canaux.GOOGLE_ADS)
-            return 15;
-        else
-            return 0;
-    }*/
  @Override
  public double tarifPubCaneaux(Long idPub) {
      Advertising p = adevertisingRepository.findById(idPub).orElse(null);
@@ -220,7 +210,7 @@ public String nbrAdvertisingsBySponsor(){
     public String maxGain(Long id) {
         Advertising p = adevertisingRepository.findById(id).orElse(null);
         double result =testSimplex(id);
-        return "Le maximum du Gain de la publicité " +p.getNom() +" est: " +result;
+        return "Le maximum du Gain de la publicité: " +p.getTitle() +" est: " +result;
     }
 
 

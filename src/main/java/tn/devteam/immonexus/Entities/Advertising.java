@@ -22,10 +22,12 @@ public class Advertising implements Serializable {
     private String title;
 
     private String description;
-    private String nom;
+  //  private String nom;
     private LocalDate startDate;
     private LocalDate endDate;
     private double cost;
+
+    private String image;
 
     @Enumerated(EnumType.STRING)
     private Canaux canaux;
@@ -46,11 +48,11 @@ public class Advertising implements Serializable {
     @ManyToOne
     private Sponsors sponsor;
 
-
+/*
     @OneToOne
     @JsonIgnore
 
-    private FileDB fileDB;
+    private FileDB fileDB;*/
 
 
 
