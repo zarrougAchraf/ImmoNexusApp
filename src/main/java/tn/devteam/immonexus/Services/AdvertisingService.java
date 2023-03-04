@@ -10,7 +10,11 @@ import tn.devteam.immonexus.Repository.AdevertisingRepository;
 import tn.devteam.immonexus.Repository.PopulationCibleRepository;
 import tn.devteam.immonexus.Repository.SponsorsRepository;
 
+import javax.persistence.EntityNotFoundException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 
 @Service
@@ -25,6 +29,10 @@ public class AdvertisingService implements IAdvertisingService {
     PopulationCibleRepository popRepo;
 
     Simplex simplexx;
+
+
+
+
 
     @Override
 public String nbrAdvertisingsBySponsor(){
@@ -56,19 +64,65 @@ public String nbrAdvertisingsBySponsor(){
     }
 
     @Override
-    public List<Advertising> getAllAdvertising()
-    {
+    public double calculerGainPublicitaire(Advertising advertising) {
+        // Calculer le coût total des vues
+        double coutTotalVues = advertising.getNbrVuesCible() * advertising.getCoutParVueCible();
 
-        return adevertisingRepository.findAll();
+        // Calculer le coût total des jours
+        double coutTotalJours = advertising.getNbrJours() * advertising.getCoutParJour();
+
+        double gainPublicitaire = coutTotalVues + coutTotalJours;
+
+        return gainPublicitaire;
+    }
+    @Override
+    public Long calculerNbreDesJours(Advertising advertising) {
+         LocalDate startDate = advertising.getStartDate();
+         LocalDate endDate = advertising.getEndDate();
+
+        long nbrJours = ChronoUnit.DAYS.between(startDate, endDate);
+
+        return nbrJours;
+
     }
 
     @Override
-    public List<Advertising> getAllActualAdvertising(LocalDate startDate, LocalDate endDate){
+    public List<Advertising> getAllAdvertising(HttpServletRequest request)
+    {
+        List<Advertising> advertisings = adevertisingRepository.findAll();
+        for (Advertising advertissing : advertisings) {
+            incrementerNombreDeVue(advertissing.getIdAd(), request);
+        }
+        return advertisings;
+    }
+
+    @Override
+    public List<Advertising> getAllActualAdvertising(LocalDate startDate, LocalDate endDate,HttpServletRequest request){
 
         List<Advertising> advertisings = adevertisingRepository.findByStartDateGreaterThanEqualAndEndDateLessThanEqual(startDate, endDate);
-
+        for (Advertising advertissing : advertisings) {
+            incrementerNombreDeVue(advertissing.getIdAd(), request);
+        }
             return advertisings;
     }
+    @Override
+    public void incrementerNombreDeVue(Long id, HttpServletRequest request) {
+        Advertising advertising = adevertisingRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Advertissing not found with id " + id));
+
+        HttpSession session = request.getSession();
+        String advertisingId = "annonce_" + id;
+
+        if (session.getAttribute(advertisingId) == null) {
+            advertising.setNbrVuesFinal(advertising.getNbrVuesFinal() + 1);
+            session.setAttribute(advertisingId, true);
+            adevertisingRepository.save(advertising);
+        }
+    }
+
+
+
+
     @Override
     public Advertising getAdvertisingById(Long idAd)
     {

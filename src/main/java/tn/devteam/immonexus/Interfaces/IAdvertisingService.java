@@ -3,6 +3,7 @@ package tn.devteam.immonexus.Interfaces;
 import tn.devteam.immonexus.Entities.Advertising;
 import tn.devteam.immonexus.Entities.PopulationCible;
 
+import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -11,7 +12,13 @@ public interface IAdvertisingService {
 
     Advertising addAdvertising(Advertising ad);
 
-    List<Advertising> getAllAdvertising();
+    double calculerGainPublicitaire(Advertising advertising);
+
+    Long calculerNbreDesJours(Advertising advertising);
+
+    List<Advertising> getAllAdvertising(HttpServletRequest request);
+
+    void incrementerNombreDeVue(Long id, HttpServletRequest request);
 
     Advertising getAdvertisingById(Long idAd);
 
@@ -35,5 +42,5 @@ public interface IAdvertisingService {
 
 
 
-    List<Advertising> getAllActualAdvertising(LocalDate startDate, LocalDate endDate);
+    List<Advertising> getAllActualAdvertising(LocalDate startDate, LocalDate endDate,HttpServletRequest request);
 }
