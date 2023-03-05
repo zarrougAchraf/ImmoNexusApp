@@ -42,10 +42,7 @@ public class Advertising implements Serializable {
 
 
 
-    @JsonIgnore
-    @ToString.Exclude
-    @OneToOne(mappedBy = "advertising")
-    private PopulationCible  populationCible;
+
 @JsonIgnore
 @ToString.Exclude
     @ManyToOne

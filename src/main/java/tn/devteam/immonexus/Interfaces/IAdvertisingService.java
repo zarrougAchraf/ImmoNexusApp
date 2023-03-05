@@ -1,7 +1,6 @@
 package tn.devteam.immonexus.Interfaces;
 
 import tn.devteam.immonexus.Entities.Advertising;
-import tn.devteam.immonexus.Entities.PopulationCible;
 
 import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDate;
@@ -31,12 +30,7 @@ public interface IAdvertisingService {
     void affectAdvertisingToSponsor(Long idSponsor, Long idAd);
 
 
-    public double testSimplex(Long id) ;
-    public double tarifPubCaneaux(Long idPub);
-    public double tarifPubParAge(Long idPop);
-    public double tarifPubParGender(Long idPop);
-    public double tarifPubParProfession(Long idPop);
-    public String maxGain(Long id);
+
 
 
 

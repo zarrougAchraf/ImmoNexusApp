@@ -24,8 +24,7 @@ public class Sponsors implements Serializable {
     private String email;
     private String phoneNumber;
     private String logo;
-    private LocalDate startDate;
-    private LocalDate endDate;
+
 
     @JsonIgnore
     @ToString.Exclude
