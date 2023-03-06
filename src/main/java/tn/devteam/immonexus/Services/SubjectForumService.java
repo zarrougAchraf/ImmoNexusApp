@@ -3,8 +3,10 @@ package tn.devteam.immonexus.Services;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import tn.devteam.immonexus.Entities.MessageForum;
 import tn.devteam.immonexus.Entities.SubjectForum;
 import tn.devteam.immonexus.Interfaces.ISubjectForumService;
+import tn.devteam.immonexus.Repository.MessageForumRepository;
 import tn.devteam.immonexus.Repository.SubjectForumRepository;
 
 import java.util.ArrayList;
@@ -16,10 +18,14 @@ import java.util.Optional;
 public class SubjectForumService implements ISubjectForumService{
     @Autowired
     SubjectForumRepository subjectForumRepository;
+    @Autowired
+    MessageForumRepository messageForumRepository;
+
 
 
     @Override
     public SubjectForum addSubjectForum(SubjectForum subjectForum) {
+
         return subjectForumRepository.save(subjectForum);
     }
 
@@ -69,4 +75,11 @@ public class SubjectForumService implements ISubjectForumService{
     }
 */
 
+    public void assignCommentsToPost(Long idSubjectForum, Long idMsgForum) {
+        SubjectForum subjectForum = subjectForumRepository.findById(idSubjectForum).orElse(null);
+        MessageForum messageForum = messageForumRepository.findById(idMsgForum).orElse(null);
+        subjectForum.getComments().add(messageForum);
+        subjectForumRepository.save(subjectForum);
+
+    }
 }

@@ -30,27 +30,6 @@ public class SubjectForumController {
     }
 
      */
-    @GetMapping("/getAll")
-    public List<SubjectForum> getAllSubForum(){
-        return subForumServ.getAllSubForum();
-    }
-    @GetMapping("/get/{id}")
-    public SubjectForum getAllSubForumById(@PathVariable(value = "id") Long id){
-        Optional<SubjectForum> sub = subForumServ.getByIdSubjectForum(id);
-        if (sub.isPresent()) {
-            return sub.get();
-        } else {
-            return null;
-        }
-    }
-    @DeleteMapping("remove/{idSubjectForum}")
-    public void deleteSubjectForum(@PathVariable(value = "idSubjectForum") Long idSubjectForum){
-        subForumServ.deleteSubjectForum(idSubjectForum);
-    }
-    @PutMapping("update/{idSubjectForum}")
-    public SubjectForum updateSubjectForum(@PathVariable(value = "idSubjectForum") Long idSubjectForum,@RequestBody SubjectForum sub ){
-        return subForumServ.updateSubjectForum(idSubjectForum,sub);
-    }
 
     /**
      * upload image using multipartfile
@@ -74,4 +53,26 @@ public class SubjectForumController {
         SubjectForum createdItem = subForumServ.addSubjectForum(item);
         return new ResponseEntity<>(createdItem, HttpStatus.CREATED);
     }
+    @GetMapping("/getAll")
+    public List<SubjectForum> getAllSubForum(){
+        return subForumServ.getAllSubForum();
+    }
+    @GetMapping("/get/{id}")
+    public SubjectForum getAllSubForumById(@PathVariable(value = "id") Long id){
+        Optional<SubjectForum> sub = subForumServ.getByIdSubjectForum(id);
+        if (sub.isPresent()) {
+            return sub.get();
+        } else {
+            return null;
+        }
+    }
+    @DeleteMapping("remove/{idSubjectForum}")
+    public void deleteSubjectForum(@PathVariable(value = "idSubjectForum") Long idSubjectForum){
+        subForumServ.deleteSubjectForum(idSubjectForum);
+    }
+    @PutMapping("update/{idSubjectForum}")
+    public SubjectForum updateSubjectForum(@PathVariable(value = "idSubjectForum") Long idSubjectForum,@RequestBody SubjectForum sub ){
+        return subForumServ.updateSubjectForum(idSubjectForum,sub);
+    }
+
 }

@@ -27,9 +27,8 @@ public class SubjectForum implements Serializable {
     @ManyToOne
     private User user;
 
-    @JsonIgnore
-    @ToString.Exclude
-    @OneToMany(mappedBy = "subjectForum")
-    private List<MessageForum> messageForumList;
+
+    @OneToMany(mappedBy = "subjectForum", cascade = CascadeType.ALL)
+    private List<MessageForum> comments;
 
 }
