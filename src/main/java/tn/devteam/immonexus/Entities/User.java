@@ -5,7 +5,6 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -14,74 +13,93 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class User implements Serializable {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(nullable = false, updatable = false)
+public class User  implements Serializable {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String userId;
+
+    private String email;
     private String firstName;
     private String lastName;
-    private String username;
     private String password;
-    private String email;
     private String profileImageUrl;
-    private Date lastLoginDate;
-    private Date lastLoginDateDisplay;
-    private Date joinDate;
-    private String role; //ROLE_USER{ read, edit }, ROLE_ADMIN {delete}
-    private String[] authorities;
-    private boolean isActive;
-    private boolean isNotLocked;
 
+    @Embedded
+    private UserAdress userAdress;
+
+  @Enumerated(EnumType.STRING)
+   private Roles role;
+
+    public User(String email, String name, String pictureUrl) {
+
+        this.email=email;
+        this.lastName=name;
+        this.profileImageUrl=pictureUrl;
+    }
+
+ /*   @Override
+    public Map<String, Object> getAttributes() {
+        Map<String, Object> attributes = new HashMap<>();
+        attributes.put("email", this.email);
+        attributes.put("firstName", this.firstName);
+        attributes.put("lastName", this.lastName);
+        attributes.put("profileImageUrl", this.profileImageUrl);
+        return attributes;
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        List<GrantedAuthority> authorities = new ArrayList<>();
+        if (this.role != null) {
+            authorities.add(new SimpleGrantedAuthority(this.role.name()));
+        }
+
+        return authorities;
+    }
+
+    @Override
+    public String getUsername() {
+        return lastName;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return false;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return false;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
+
+      @Override
+    public String getName() {
+        return this.lastName;
+    }*/
+
+
+    @ManyToMany(mappedBy="user")
     @JsonIgnore
     @ToString.Exclude
-    @OneToMany(mappedBy = "user")
-    private List<Sponsors> sponsorsList;
+    private List<Visit> visit ;
 
     @JsonIgnore
+    @OneToOne(mappedBy="visit")
     @ToString.Exclude
-    @OneToMany(mappedBy = "user")
-    private List<SubjectForum> subjectForumList;
+    private VisitPayment ivsitPayment;
 
-    @JsonIgnore
-    @ToString.Exclude
-    @OneToMany(mappedBy = "user")
-    private List<Announcement> announcementList;
 
-    @JsonIgnore
-    @ToString.Exclude
-    @OneToMany(mappedBy = "user")
-    private List<Visit> visitList;
 
-    @JsonIgnore
-    @ToString.Exclude
-    @OneToMany(mappedBy = "user")
-    private List<Scraping> scrapingList;
-
-    @JsonIgnore
-    @ToString.Exclude
-    @OneToMany
-    private List<Rating> ratingList;
-
-    @JsonIgnore
-    @ToString.Exclude
-    @OneToMany(mappedBy = "user")
-    private List<Claim> claimList;
-
-    @JsonIgnore
-    @ToString.Exclude
-    @OneToMany(mappedBy = "user")
-    private List<Mortgage> mortgageList;
-
-    @JsonIgnore
-    @ToString.Exclude
-    @ManyToMany
-    private List<GroupAuction> groupAuctionList;
-
-    @JsonIgnore
-    @ToString.Exclude
-    @OneToMany(mappedBy = "user")
-    private List<Affordability> affordabilityList;
 }
+
