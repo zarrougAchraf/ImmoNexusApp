@@ -1,28 +1,28 @@
 package tn.devteam.immonexus.Interfaces;
 
 import tn.devteam.immonexus.Entities.Claim;
-import tn.devteam.immonexus.Entities.ReclamationStatsDTO;
-import tn.devteam.immonexus.Entities.ReclamationType;
-import tn.devteam.immonexus.Entities.User;
+import tn.devteam.immonexus.Entities.ClaimStatsDTO;
 
 import javax.transaction.Transactional;
 import java.util.List;
 
 public interface IClaimService {
+    @Transactional
+    Claim addReclamation(Claim r, Long id);
 
-  @Transactional
-  Claim  addReclamation(Claim r, Long id);
+    List<Claim> getAllReclamations();
 
-  public List<Claim> getAllReclamations();
-    public void deleteReclamation(Long id);
-    public void marqueTraitee(Long id);
-    public List<Claim> getReclamationsByUser(Long idUser);
-    public List<Claim> getReclamationsNonTraitees();
-    public List<Claim> getReclamationsTraitees();
+    void deleteReclamation(Long id);
 
-  long getNumberOfClaims();
+    void marqueTraitee(Long id);
 
-  List<ReclamationStatsDTO> getReclamationStatsByType();
+    List<Claim> getReclamationsByUser(Long idUser);
 
-  long countReclamationsByType(ReclamationType type);
+    List<Claim> getReclamationsNonTraitees();
+
+    List<Claim> getReclamationsTraitees();
+
+    Claim getReclamationById(Long id);
+
+    List<ClaimStatsDTO> getReclamationStatsByType();
 }

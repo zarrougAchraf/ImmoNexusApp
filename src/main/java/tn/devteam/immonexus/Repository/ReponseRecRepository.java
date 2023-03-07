@@ -10,6 +10,7 @@ import tn.devteam.immonexus.Entities.ReponseRec;
 import java.util.List;
 
 @Repository
+
 public interface ReponseRecRepository extends CrudRepository<ReponseRec, Long> {
     @Query("SELECT DISTINCT rep.message FROM ReponseRec rep INNER JOIN rep.reclamation rec WHERE rec.type= :reclamationType ")
     List<String> reponseSuggestion(@Param("reclamationType") ReclamationType reclamationType );

@@ -2,72 +2,68 @@ package tn.devteam.immonexus.Controllers;
 
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import tn.devteam.immonexus.Entities.Claim;
-import tn.devteam.immonexus.Entities.ReclamationType;
+import tn.devteam.immonexus.Entities.ClaimStatsDTO;
 import tn.devteam.immonexus.Interfaces.IClaimService;
-import tn.devteam.immonexus.exception.ExceptionHandling;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/Reclamation")
-public class ClaimController extends ExceptionHandling {
-    @Autowired
-    private IClaimService iClaimService;
+public class ClaimController {
 
+
+    private IClaimService rService;
+
+    @Autowired
+    public ClaimController(IClaimService rService) {
+        this.rService = rService;
+    }
 
     @PostMapping("/add/{userId}")
-    //localhost:8080/WomenEmpowerment/Reclamation/add/
-    public Claim addReclamation(@RequestBody Claim r,@PathVariable("userId") Long id) {
-        return iClaimService.addReclamation(r,id);
+    public ResponseEntity<Claim> addReclamation(@RequestBody Claim r, @PathVariable("userId") Long id) {
+        Claim addedClaim = rService.addReclamation(r, id);
+        return ResponseEntity.ok(addedClaim);
     }
+
     @GetMapping("/getAll")
     public List<Claim> getAllReclamations(){
-        return iClaimService.getAllReclamations();
+        return rService.getAllReclamations();
     }
     @GetMapping("/getReclamationsTraitees")
     public List<Claim> getReclamationsTraitees() {
-        return iClaimService.getReclamationsTraitees();
+        return rService.getReclamationsTraitees();
 
     }
 
     @GetMapping("/getReclamationsNonTraitees")
+    @ResponseBody
     public List<Claim> getReclamationsNonTraitees() {
-        return iClaimService.getReclamationsNonTraitees();
+        return rService.getReclamationsNonTraitees();
 
     }
     @GetMapping("/getReclamationsByClient/{idUser}")
+    @ResponseBody
     public List<Claim> getReclamationsByClient(@PathVariable("idUser") Long idUser) {
-        return iClaimService.getReclamationsByUser(idUser);
+        return rService.getReclamationsByUser(idUser);
 
     }
     @PutMapping("/marquerTraitee/{idReclamation}")
+    @ResponseBody
     public void marquerTraitee(@PathVariable("idReclamation") Long idReclamation)
     {
-        iClaimService.marqueTraitee(idReclamation);
+        rService.marqueTraitee(idReclamation);
     }
     @DeleteMapping("/delete/{idReclamation}")
     public void deleteReclamation(@PathVariable("idReclamation") Long id) {
-        iClaimService.deleteReclamation(id);
+        rService.deleteReclamation(id);
     }
 
-    @GetMapping("/stats/total")
-    public ResponseEntity<Long> getTotalNumberOfClaims() {
-        return ResponseEntity.ok(iClaimService.getNumberOfClaims());
-    }
-
-    @GetMapping("/reclamation/stats")
-    public Map<String, Long> getReclamationStats() {
-        Map<String, Long> stats = new HashMap<>();
-        for (ReclamationType type : ReclamationType.values()) {
-            long count = iClaimService.countReclamationsByType(type);
-            stats.put(type.toString(), count);
-        }
-        return stats;
+    @GetMapping("/by-type")
+    public ResponseEntity<List<ClaimStatsDTO>> getReclamationStatsByType() {
+        List<ClaimStatsDTO> stats = rService.getReclamationStatsByType();
+        return ResponseEntity.ok(stats);
     }
 }

@@ -4,37 +4,32 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tn.devteam.immonexus.Entities.Claim;
-import tn.devteam.immonexus.Entities.ReclamationStatsDTO;
+import tn.devteam.immonexus.Entities.ClaimStatsDTO;
 import tn.devteam.immonexus.Entities.ReclamationType;
 import tn.devteam.immonexus.Entities.User;
 import tn.devteam.immonexus.Interfaces.IClaimService;
 import tn.devteam.immonexus.Repository.ClaimRepository;
+import tn.devteam.immonexus.Repository.ReponseRecRepository;
 import tn.devteam.immonexus.Repository.UserRepository;
 
 import javax.transaction.Transactional;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
+import java.util.*;
 
 @Service
 @Slf4j
 public class ClaimService implements IClaimService {
+    @Autowired
+    ClaimRepository claimRepository;
 
-     private ClaimRepository claimRepository;
-     private UserRepository userRepository;
-
-     @Autowired
-    public ClaimService(ClaimRepository claimRepository, UserRepository userRepository) {
-        this.claimRepository = claimRepository;
-        this.userRepository = userRepository;
-    }
+    @Autowired
+    UserRepository userRepository;
 
 
-    private final String[] badWords = {"fuck", "shit", "connard"};
+    @Autowired
+    ReponseRecRepository reponseRecRepository;
 
-    public String filterComplaint(String complaint) {
+    private final String[] badWords = {"fuck", "bitch", "shit"};
+    private String filterComplaint(String complaint) {
         for (String badWord : badWords) {
             int wordStart = complaint.indexOf(badWord);
             while (wordStart >= 0) {
@@ -50,39 +45,33 @@ public class ClaimService implements IClaimService {
     private String repeat(String s, int n) {
         return String.join("", Collections.nCopies(n, s));
     }
-
     @Override
     @Transactional
-    public Claim  addReclamation(Claim r, Long id) {
+    public Claim addReclamation(Claim r, Long id) {
         User user = userRepository.findById(id).orElse(null);
-        if (user == null) {
-            throw new RuntimeException("User not found");
-             }
-            r.setUser(user);
+        r.setUser(user);
         String filteredComplaint = filterComplaint(r.getDescription());
         r.setDescription(filteredComplaint);
-            return claimRepository.save(r);
-
+        Claim addedClaim = claimRepository.save(r);
+        return addedClaim;
     }
 
     @Override
     public List<Claim> getAllReclamations() {
+
         return (List<Claim>) claimRepository.findAll();
     }
-
     @Override
     public void deleteReclamation(Long id) {
         Claim r= claimRepository.findById(id).get();
         claimRepository.delete(r);
     }
-
     @Override
     public void marqueTraitee(Long id) {
         Claim rec = (Claim) claimRepository.findById(id).orElse(null)	;
         rec.setTraitee(true);
         claimRepository.save(rec);
     }
-
     @Override
     public List<Claim> getReclamationsByUser(Long idUser) {
         List<Claim> first = (List<Claim>) claimRepository.findAll();
@@ -98,63 +87,33 @@ public class ClaimService implements IClaimService {
 
         return second;
     }
-
     @Override
     public List<Claim> getReclamationsNonTraitees() {
         List<Claim> myList = claimRepository.findAllNonTraitees();
         return myList;
     }
-
     @Override
     public List<Claim> getReclamationsTraitees() {
         List<Claim> myList = claimRepository.findAllTraitees();
         return myList;
     }
 
-
-    //  @Override
-    //public Claim addClaimToUser(Long userId, Claim claim) {
-      //  User user = userRepository.getUserById(userId);
-        //if (user == null) {
-          //  throw new RuntimeException("User not found");
-       // }
-        //claim.setUser(user);
-        //return claimRepository.save(claim);
-    //}
-
-// STATISTIQUE TEST
     @Override
-    public long getNumberOfClaims() {
-        return claimRepository.count();
+    public Claim getReclamationById(Long id) {
+        return claimRepository.findById(id).orElse(null);
     }
 
-    @Override
-    public List<ReclamationStatsDTO> getReclamationStatsByType() {
-        List<Claim> reclamations = claimRepository.findAll();
-        Map<ReclamationType, List<Claim>> reclamationsByType = reclamations.stream()
-                .collect(Collectors.groupingBy(Claim::getType));
+    //statistique test
 
-        List<ReclamationStatsDTO> statsList = new ArrayList<>();
-        for (Map.Entry<ReclamationType, List<Claim>> entry : reclamationsByType.entrySet()) {
-            ReclamationStatsDTO stats = new ReclamationStatsDTO();
-            stats.setType(entry.getKey());
-            stats.setCount(entry.getValue().size());
-            stats.setPercentage((double) entry.getValue().size() / reclamations.size() * 100);
-            statsList.add(stats);
+     @Override
+    public List<ClaimStatsDTO> getReclamationStatsByType() {
+        List<ClaimStatsDTO> stats = new ArrayList<>();
+        for (ReclamationType type : ReclamationType.values()) {
+            Long count = claimRepository.countByType(type);
+            stats.add(new ClaimStatsDTO(type.toString(), count));
         }
-
-        return statsList;
+        return stats;
     }
-
-    @Override
-    public long countReclamationsByType(ReclamationType type) {
-        return claimRepository.countByType(type);
-    }
-
-
-
-
-
 
 
 

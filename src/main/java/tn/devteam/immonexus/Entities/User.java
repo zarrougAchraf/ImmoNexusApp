@@ -6,9 +6,9 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
 
 @Entity
 @ToString
@@ -20,8 +20,6 @@ public class User implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(nullable = false, updatable = false)
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-
     private Long id;
     private String userId;
     private String firstName;
@@ -38,6 +36,13 @@ public class User implements Serializable {
     private String[] authorities;
     private boolean isActive;
     private boolean isNotLocked;
+
+
+
+    @JsonIgnore
+    @ToString.Exclude
+    @OneToMany(mappedBy = "user")
+    private List<ReponseRec> ReponsRec;
 
     @JsonIgnore
     @ToString.Exclude
@@ -72,7 +77,7 @@ public class User implements Serializable {
     @JsonIgnore
     @ToString.Exclude
     @OneToMany(mappedBy = "user")
-    private List<Claim> reclamations;
+    private List<Claim> claimList;
 
     @JsonIgnore
     @ToString.Exclude
@@ -88,8 +93,4 @@ public class User implements Serializable {
     @ToString.Exclude
     @OneToMany(mappedBy = "user")
     private List<Affordability> affordabilityList;
-
-    @JsonIgnore
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
-    private Set<ReponseRec> ReponsRec;
 }
