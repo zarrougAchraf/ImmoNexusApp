@@ -20,19 +20,14 @@ public class Sponsors implements Serializable {
     private Long idSponsor;
     private String name;
     private String description;
-    private float amountMonthly;
+
     private String email;
     private String phoneNumber;
-    private String logo;
 
 
     @JsonIgnore
     @ToString.Exclude
     @OneToMany(mappedBy = "sponsor")
     private List<Advertising> advertisingList;
-    @JsonIgnore
-    @ToString.Exclude
-    @ManyToOne
-    private User user;
 
 }

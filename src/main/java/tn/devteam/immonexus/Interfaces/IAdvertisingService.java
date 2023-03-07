@@ -27,7 +27,7 @@ public interface IAdvertisingService {
 
     void deleteAll();
 
-    void affectAdvertisingToSponsor(Long idSponsor, Long idAd);
+  //  void affectAdvertisingToSponsor(Long idSponsor, Long idAd);
 
 
 

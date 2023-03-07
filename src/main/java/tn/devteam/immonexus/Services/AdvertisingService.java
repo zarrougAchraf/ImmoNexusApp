@@ -30,6 +30,8 @@ public class AdvertisingService implements IAdvertisingService {
 
 
 
+
+
     @Override
 public String nbrAdvertisingsBySponsor(){
 
@@ -43,12 +45,12 @@ public String nbrAdvertisingsBySponsor(){
                    if (sp.getAdvertisingList().size()>s.getAdvertisingList().size()) {
                        n=sp.getAdvertisingList().size();
                        sponsors=sp;
-                       log.info("fdfg"+n);
+                      // log.info("fdfg"+n);
                    }
                 }
 
         }
-        return("le sponsor qui a plusieurs publicites "+sponsors.getName()+"a comme nbr"+ n) ;
+        return("le sponsor qui a le plus nbre des publicites "+sponsors.getName()+"a comme nbr"+ n) ;
     }
 
 
@@ -142,13 +144,13 @@ public String nbrAdvertisingsBySponsor(){
 
         adevertisingRepository.deleteAll();
     }
-@Override
+/*@Override
     public void affectAdvertisingToSponsor(Long idSponsor,Long idAd){
         Sponsors sponsor=sponsorsRepository.findById(idSponsor).orElse(null);
         Advertising ad=adevertisingRepository.findById(idAd).orElse(null);
         ad.setSponsor(sponsor);
         adevertisingRepository.save(ad);
-    }
+    }*/
 
 // ******************************
 

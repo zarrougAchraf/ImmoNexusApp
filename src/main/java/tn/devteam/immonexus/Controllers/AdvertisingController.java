@@ -19,10 +19,14 @@ import org.springframework.web.multipart.MultipartFile;
 import tn.devteam.immonexus.Entities.Advertising;
 import tn.devteam.immonexus.Entities.Canaux;
 import tn.devteam.immonexus.Entities.DateValidationException;
+import tn.devteam.immonexus.Entities.Sponsors;
 import tn.devteam.immonexus.Interfaces.IAdvertisingService;
 import tn.devteam.immonexus.Interfaces.IFileUploadService;
 import tn.devteam.immonexus.Repository.AdevertisingRepository;
+import tn.devteam.immonexus.Repository.SponsorsRepository;
+import tn.devteam.immonexus.Services.EmailService;
 
+import javax.mail.SendFailedException;
 import javax.servlet.http.HttpServletRequest;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -40,6 +44,10 @@ public class AdvertisingController {
     IFileUploadService iFileUploadService;
     @Autowired
     AdevertisingRepository adevertisingRepository;
+    @Autowired
+    private EmailService emailsend;
+    @Autowired
+    SponsorsRepository sponsorsRepository;
 
     @PostMapping("/add-Advertising/")
     public Advertising addAdvertisingg(@RequestParam("title") String title,
@@ -48,7 +56,9 @@ public class AdvertisingController {
                                        @RequestParam("nbrVuesCible") double nbrVuesCible,
                                        @RequestParam("coutParJour") double coutParJour,
                                        @RequestParam("coutParVueCible") double coutParVueCible,
-                                        @RequestParam("image") MultipartFile image,
+                                       @RequestParam("image") MultipartFile image,
+                                       @RequestParam("idSponsor") Long idSponsor,
+
                                        @RequestParam("endDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate
 
                                        ) throws IOException {
@@ -80,6 +90,20 @@ public class AdvertisingController {
         double gainPublicitaire = iAdvertisingService.calculerGainPublicitaire(advertising);
         advertising.setGainPublicitaire(gainPublicitaire);
 
+        Sponsors sponsor=sponsorsRepository.findById(idSponsor).orElse(null);
+        advertising.setSponsor(sponsor);
+
+
+       try {
+            emailsend.sendEmail(advertising.getSponsor().getEmail(),
+                    "a propos l'ajout de votre pub",
+                    "Bonjour " + advertising.getSponsor().getName()
+                            + "  votre publicite a ete publiee et elle sera diponible dans notre site "
+                            + advertising.getNbrJours() +" jours du " + advertising.getStartDate() +
+                            " à "+ advertising.getEndDate());
+        } catch (SendFailedException e) {
+            throw new RuntimeException(e);
+        }
         return iAdvertisingService.addAdvertising(advertising);
 
     }
@@ -168,6 +192,24 @@ public class AdvertisingController {
         PdfPCell cell;
 
         // Ajouter le Description de la publicité
+        cell = new PdfPCell(new Phrase("name Of Sponsor"));
+        cell.setBackgroundColor(BaseColor.LIGHT_GRAY);
+        table.addCell(cell);
+        cell = new PdfPCell(new Phrase(advertising.getSponsor().getName()));
+        table.addCell(cell);
+
+        cell = new PdfPCell(new Phrase("Email Of Sponsor"));
+        cell.setBackgroundColor(BaseColor.LIGHT_GRAY);
+        table.addCell(cell);
+        cell = new PdfPCell(new Phrase(advertising.getSponsor().getEmail()));
+        table.addCell(cell);
+
+        cell = new PdfPCell(new Phrase("PhoneNumber Of Sponsor"));
+        cell.setBackgroundColor(BaseColor.LIGHT_GRAY);
+        table.addCell(cell);
+        cell = new PdfPCell(new Phrase(advertising.getSponsor().getPhoneNumber()));
+        table.addCell(cell);
+
         cell = new PdfPCell(new Phrase("Description"));
         cell.setBackgroundColor(BaseColor.LIGHT_GRAY);
         table.addCell(cell);
@@ -226,19 +268,6 @@ public class AdvertisingController {
 
 
 
-    /*    cell = new PdfPCell(new Phrase("Image"));
-        cell.setBackgroundColor(BaseColor.LIGHT_GRAY);
-        table.addCell(cell);
-
-        cell = new PdfPCell();
-        cell.addElement(Image.getInstance(advertising.getImage()));
-        table.addCell(cell);
-        cell = new PdfPCell();
-        Image image = Image.getInstance(advertising.getImage());
-        image.scaleToFit(100, 100); // redimensionner l'image
-        cell.addElement(image);
-        table.addCell(cell);*/
-
         document.add(table);
 
         // Fermer le document
@@ -257,18 +286,18 @@ public class AdvertisingController {
     }
 
 
-    @GetMapping("/get-Advertising-ById/{idA}")
+   /* @GetMapping("/get-Advertising-ById/{idA}")
     public Advertising getAdvertisingById(@PathVariable("idA") Long idAd)
     {
         return iAdvertisingService.getAdvertisingById(idAd);
-    }
+    }*/
 
-    @PutMapping("/update-Advertising")
+ /*   @PutMapping("/update-Advertising")
     public Advertising updateAdvertising(@RequestBody Advertising add)
     {
 
         return iAdvertisingService.updateAdvertising(add);
-    }
+    }*/
 
     @DeleteMapping("/delete-Advertising-ById/{idA}")
     public void deleteById(@PathVariable("idA") Long idAdvertising) {
@@ -284,11 +313,7 @@ public class AdvertisingController {
         iAdvertisingService.deleteAll();
     }
 
-    @PutMapping("/affect-Advertising-To-Sponsor/{idSponsor}/{idAd}")
-    public void affectAdvertisingToSponsor(@PathVariable("idSponsor") Long idSponsor,
-                                           @PathVariable("idAd") Long idAd){
-        iAdvertisingService.affectAdvertisingToSponsor(idSponsor,idAd);
-    }
+
 
 
 

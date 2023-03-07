@@ -39,10 +39,17 @@ public class User implements Serializable {
     private boolean isActive;
     private boolean isNotLocked;
 
-    @JsonIgnore
+   @JsonIgnore
     @ToString.Exclude
-    @OneToMany(mappedBy = "user")
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_id")
     private List<Sponsors> sponsorsList;
+
+     @JsonIgnore
+     @ToString.Exclude
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_id")
+    private List<Advertising> advertisingList;
 
     @JsonIgnore
     @ToString.Exclude
