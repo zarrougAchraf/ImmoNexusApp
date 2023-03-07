@@ -19,10 +19,11 @@ public class visitService implements IVisitService {
     @Autowired
     private DistanceService distanceService;
 
-    @Override
+
+ /*   @Override
     public Visit createVisit(Visit visit, UserAdress userAdress) {
         return null;
-    }
+    }*/
 
     @Override
     public List<Visit> getAllVisits() {
@@ -59,29 +60,26 @@ public class visitService implements IVisitService {
 
     }
 
-  /*
-    @RestController
-    @RequestMapping("/visits")
-    public class VisitService {
-        @Autowired
-        private DistanceService distanceService;
+    @Override
+    public Visit addVisitWithDistanceCondition( Visit visit, String ville, String rue, String codePostal, double userAdresstLatitude, double userAdressLongitude) {
+        UserAdress userAdress = new UserAdress(ville, rue, codePostal, userAdresstLatitude, userAdressLongitude);
+        double distance = distanceService.calculateDistance(visit.getVisitAdress(), userAdress);
 
-      @PostMapping
-        public Visit createVisit(@RequestBody Visit visit) {
-            double userLatitude=48.8566;
-            double userLongitude=2.3522;
-            Coordinates userCoordinates = new Coordinates();
-            double distance = distanceService.calculateDistance(userCoordinates, visit.getVisitAdress().getCoordinates());
-            // calculer le prix en fonction de la distance et d'autres critères
-            float prix = visit.getPrixVisite();
-            if(distance > 50) {
-                // augmenter le prix de visite de 20%
-                prix *= 1.2;
-            }
-            visit.setPrixVisite(prix);
-            return visitRepository.save(visit);
-        }}
-    }*/
+        float price = visit.getVisitPrice();
+        if (distance > 50.00) {
+            // increase the visit price by 20%
+            price *= 1.2;
+            visit.setVisitPrice(price);
+            System.out.println("visit iss"+ visit.getVisitPrice());
+
+
+        }
+        visit.setVisitPrice(price);
+        //  ivisitService.addVisit(visit);
+        return visitRepository.save(visit);
+    }
+
+
 
 
 }
