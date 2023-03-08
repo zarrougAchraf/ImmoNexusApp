@@ -9,6 +9,7 @@ import tn.devteam.immonexus.Interfaces.IVisitService;
 import tn.devteam.immonexus.Repository.UserRepository;
 import tn.devteam.immonexus.Repository.VisitRepository;
 import tn.devteam.immonexus.Services.DistanceService;
+import tn.devteam.immonexus.Services.visitService;
 
 import java.util.List;
 @CrossOrigin
@@ -31,6 +32,10 @@ public class VisitController {
     private DistanceService distanceService;
 
 
+    @Autowired
+    visitService visitService;
+
+
     @PostMapping("addVisitWithDistanceCondition")
     public Visit addVisitWithDistanceCondition(@RequestBody Visit visit,
                                                @RequestParam String ville,
@@ -38,10 +43,9 @@ public class VisitController {
                                                @RequestParam String codePostal,
                                                @RequestParam double userAdresstLatitude,
                                                @RequestParam double userAdressLongitude) {
-        return ivisitService.addVisitWithDistanceCondition( visit,ville, rue, codePostal, userAdresstLatitude, userAdressLongitude);
+        return ivisitService.addVisitWithDistanceCondition(visit, ville, rue, codePostal, userAdresstLatitude, userAdressLongitude);
 
-        }
-
+    }
 
 
     @GetMapping("/getAllVisits")
@@ -68,4 +72,15 @@ public class VisitController {
     public void deleteVisit(@PathVariable Long id) {
         ivisitService.deleteVisit(id);
     }
+
+
+   /* @GetMapping("/expiring-visits")
+    public String getExpiringVisits(Model model) {
+        List<Visit> expiringVisits = visitService.getExpiringVisitsForView();
+        model.addAttribute("visits", expiringVisits);
+        return "expiring-visits";
+    }*/
+
+
+
 }

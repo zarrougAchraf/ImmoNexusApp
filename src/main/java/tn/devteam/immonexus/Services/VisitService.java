@@ -2,12 +2,16 @@ package tn.devteam.immonexus.Services;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import tn.devteam.immonexus.Entities.UserAdress;
 import tn.devteam.immonexus.Entities.Visit;
 import tn.devteam.immonexus.Interfaces.IVisitService;
 import tn.devteam.immonexus.Repository.VisitRepository;
 
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -70,7 +74,7 @@ public class visitService implements IVisitService {
             // increase the visit price by 20%
             price *= 1.2;
             visit.setVisitPrice(price);
-            System.out.println("visit iss"+ visit.getVisitPrice());
+            System.out.println("visit is : "+ visit.getVisitPrice());
 
 
         }
@@ -80,7 +84,45 @@ public class visitService implements IVisitService {
     }
 
 
+    // @Scheduled(cron = "0 0 * ? * *") //running the method every hour at minute 0, and at the start of the hour.
+    @Scheduled(fixedRate = 60000)  //run the method every 60 seconds
+    public List<Visit> getExpiringVisits() {
+        LocalDate curDate = LocalDate.now();
+        System.out.println("curDate  is : "+curDate);
+        List<Visit> visits = visitRepository.findAll();
+        List<Visit> expiringVisits = new ArrayList<>();
+        for (Visit visit : visits) {
+            LocalDate endDate = visit.getVisitDate();
+            long diffInDays = ChronoUnit.DAYS.between(endDate, curDate);
 
+            System.out.println("diffInDays  is : "+diffInDays);
 
+            if (diffInDays == 7) {
+                expiringVisits.add(visit);
+                log.info("Expiring visits are :  " +expiringVisits);
+            }
+        }
+        return expiringVisits;
+
+    }
+
+  /* // @Scheduled(cron = "0 0 * ? * *")
+    @Scheduled(fixedRate = 60000)
+    public void printExpiringVisits() {
+        List<Visit> expiringVisits = getExpiringVisits();
+        System.out.println("List of expiring visits: " + expiringVisits);
+    }
+
+    public  List<Visit> getExpiringVisitsForView() {
+        return getExpiringVisits();
+    }*/
 }
+
+
+
+
+
+
+
+
 

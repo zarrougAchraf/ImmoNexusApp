@@ -19,9 +19,7 @@ public class Visit implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idVisit;
     private LocalDate visitDate;
-  //
-  // @Embedded
-  // private VisitAdress visitAdress;
+
     private double duration;
     @Enumerated(EnumType.STRING)
     private VisitType visitType;
@@ -39,6 +37,11 @@ public class Visit implements Serializable {
     @JsonIgnore
     @ToString.Exclude
     private Set<User> user ;
+
+
+ /*   @ManyToOne(cascade = CascadeType.ALL)
+    Announcement announcement;
+*/
 
 
 
