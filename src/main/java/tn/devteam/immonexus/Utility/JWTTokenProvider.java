@@ -39,6 +39,7 @@ public class JWTTokenProvider {
                 .sign(HMAC512(secret.getBytes()));
     }
     // from the token we gona take all the autorities
+
     public List<GrantedAuthority> getAuthorities(String token) {
         String[] claims = getClaimsFromToken(token);
         return stream(claims).map(SimpleGrantedAuthority::new).collect(Collectors.toList());

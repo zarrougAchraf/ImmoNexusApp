@@ -74,6 +74,8 @@ public class EmailService {
                 "<p>Voici votre mot de passe :</p>" +
                 "<h2 style='font-size: 28px;'>" + password + "</h2>" +
                 "<p>Conservez-le précieusement.</p>" +
+                "<p>Voici votre photo de profil :</p>" +
+                "<img src='" + profileImageUrl + "' alt='Photo de profil de " + firstName + "' />" +
                 "<p>Merci de faire confiance à notre entreprise.</p>" +
                 "</td>" +
                 "</tr>" +
