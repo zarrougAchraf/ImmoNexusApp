@@ -6,3 +6,4 @@ public class EmailNotFoundException extends Exception {
         super(message);
     }
 }
+
