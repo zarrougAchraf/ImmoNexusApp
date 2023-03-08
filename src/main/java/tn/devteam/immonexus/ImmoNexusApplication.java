@@ -4,18 +4,31 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 
 import java.io.File;
+import java.security.Principal;
 import java.util.Arrays;
 import java.util.Collections;
 
 import static tn.devteam.immonexus.Constant.FileConstant.USER_FOLDER;
 
 @SpringBootApplication
+@RestController
 public class ImmoNexusApplication {
+
+    @GetMapping
+    public String welcome(){
+        return "Welcome to Google !!";
+    }
+
+
+
+
 
     public static void main(String[] args) {
         SpringApplication.run(ImmoNexusApplication.class, args);

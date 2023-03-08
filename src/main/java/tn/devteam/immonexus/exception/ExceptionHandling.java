@@ -23,6 +23,8 @@ import java.io.IOException;
 import java.util.Objects;
 
 import static org.springframework.http.HttpStatus.*;
+import static org.springframework.http.HttpStatus.NOT_FOUND;
+
 @RestControllerAdvice
 public class ExceptionHandling implements ErrorController {
     private final Logger LOGGER = LoggerFactory.getLogger(getClass());

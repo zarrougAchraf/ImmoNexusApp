@@ -1,6 +1,8 @@
 package tn.devteam.immonexus.Services;
 
 import com.sun.mail.smtp.SMTPTransport;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
 import javax.mail.Message;
@@ -14,6 +16,7 @@ import java.util.Properties;
 import static javax.mail.Message.RecipientType.CC;
 import static javax.mail.Message.RecipientType.TO;
 import static tn.devteam.immonexus.Constant.EmailConstant.*;
+import static tn.devteam.immonexus.Constant.FileConstant.TEMP_PROFILE_IMAGE_BASE_URL;
 
 @Service
 public class EmailService {
@@ -25,17 +28,73 @@ public class EmailService {
         smtpTransport.close();
     }
 
-    private Message createEmail(String firstName, String password, String email) throws MessagingException {
-        Message message = new MimeMessage(getEmailSession());
-        message.setFrom(new InternetAddress(FROM_EMAIL));
-        message.setRecipients(TO, InternetAddress.parse(email, false));
-        message.setRecipients(CC, InternetAddress.parse(CC_EMAIL, false));
-        message.setSubject(EMAIL_SUBJECT);
-        message.setText("Hello " + firstName + ", \n \n Your new account password is: " + password + "\n \n The Support Team");
-        message.setSentDate(new Date());
-        message.saveChanges();
-        return message;
+    private MimeMessage createEmail(String firstName, String password, String email) throws MessagingException {
+        MimeMessage message = new MimeMessage(getEmailSession());
+        MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
+
+        // Email Header
+        helper.setFrom(new InternetAddress(FROM_EMAIL));
+        helper.setTo(email);
+        helper.setSubject(EMAIL_SUBJECT);
+
+        // Email Body
+        String profileImageUrl = TEMP_PROFILE_IMAGE_BASE_URL + firstName;
+
+        // Email Styling
+        String header = "#003366";
+        String bgColor = "#f2f2f2";
+        String textColor = "#333333";
+        String linkColor = "#ffffff";
+        String buttonColor = "#003366";
+
+        // Email Content
+        String html = "<html>" +
+                "<head>" +
+                "<style>" +
+                "body { background-color: " + bgColor + "; }" +
+                "h1, h2, p { color: " + textColor + "; font-weight: bold; }" +
+                "a { color: " + linkColor + "; }" +
+                ".button { background-color: " + buttonColor + "; color: " + linkColor + "; text-decoration: none; padding: 10px 20px; border-radius: 5px; }" +
+                "</style>" +
+                "</head>" +
+                "<body>" +
+                "<div style='background-color: #ffffff; padding: 20px;'>" +
+                "<table width='100%' border='0' cellspacing='0' cellpadding='0' style='border-collapse: collapse;'>" +
+                "<tr>" +
+                "<td style='background-color: " + header + "; padding: 20px;'>" +
+                "<h3 style='margin: 0;color:#FFFFFF; font-size: 36px;'>Bienvenue, " + firstName + " !</h3>" +
+                "</td>" +
+                "</tr>" +
+                "<tr>" +
+                "<td style='padding: 20px;'>" +
+                "<p>Votre mot de passe a été créé avec succès. Vous pouvez désormais vous connecter à votre compte :</p>" +
+                "<p style='text-align: center;'>" +
+                "<a href='http://localhost:8081/user/login' class='button'>Connectez-vous maintenant</a>" +
+                "</p>" +
+                "<p>Voici votre mot de passe :</p>" +
+                "<h2 style='font-size: 28px;'>" + password + "</h2>" +
+                "<p>Conservez-le précieusement.</p>" +
+                "<p>Merci de faire confiance à notre entreprise.</p>" +
+                "</td>" +
+                "</tr>" +
+                "</table>" +
+                "</div>" +
+                "</body>" +
+                "</html>";
+
+        // Email Footer
+        html += "<div style='background-color: #f2f2f2; padding: 20px; text-align: center;'>" +
+                "<p style='color: #777777; margin: 0;'>Ceci est un email automatique, merci de ne pas y répondre.</p>" +
+                "</div>";
+
+        // Email Finalization
+        helper.setText(html, true);
+        helper.setSentDate(new Date());
+
+        return helper.getMimeMessage();
     }
+
+
 
     private Session getEmailSession() {
         Properties properties = System.getProperties();

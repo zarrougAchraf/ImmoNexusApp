@@ -120,7 +120,6 @@ public class UserService implements IUserService, UserDetailsService {
         LOGGER.info("New user password: " + password);
         return user;
     }
-    //FFE
 
     @Override
     public User updateUser(String currentUsername, String newFirstName, String newLastName, String newUsername, String newEmail, String role, boolean isNonLocked, boolean isActive, MultipartFile profileImage) throws UserNotFoundException, UsernameExistException, EmailExistException, IOException, NotAnImageFileException {
