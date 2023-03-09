@@ -8,17 +8,17 @@ import org.springframework.stereotype.Component;
 @Aspect
 @Component
 public class AspectLogging {
-   /*
-@Before("execution(public * tn.devteam.immonexus.Services.*.* (..))")
+    /*
+@Before("execution(public * tn.esprit.spring.springbootsae3.service.*.* (..))")
     public void LogMethodEntry(JoinPoint joinPoint){
     String name = joinPoint.getSignature().getName();
     log.info("In method :" + name+":");
-}*/
+}
 
-
+ */
 
     /*
-@AfterReturning("execution( * tn.devteam.immonexus.Services.*.add*(..))")
+@AfterReturning("execution( * tn.esprit.spring.springbootsae3.service.*.add*(..))")
     public void logMethodExit1(JoinPoint joinPoint){
     String name = joinPoint.getSignature().getName();
     log.info("Out of method without errors:" + name+":");
@@ -26,12 +26,12 @@ public class AspectLogging {
 /*
      */
 /*
-@AfterThrowing("execution(* tn.devteam.immonexus.Services.*.*(..))")
+@AfterThrowing("execution(* tn.esprit.spring.springbootsae3.service.*.*(..))")
 public void logMethodExit2(JoinPoint joinPoint) {
     String name = joinPoint.getSignature().getName();
     log.info("Out of method without errors:" + joinPoint.getSignature().getName()+":");
 }
-@After("execution(* tn.devteam.immonexus.Services.*.*(..))")
+@After("execution(* tn.esprit.spring.springbootsae3.service.*.*(..))")
 public void logMethodExit(JoinPoint joinPoint){
     String name = joinPoint.getSignature().getName();
         log.info("Out of method :" + name+":");
@@ -39,7 +39,7 @@ public void logMethodExit(JoinPoint joinPoint){
 */
     /*
 
-    @Around("execution(* tn.devteam.immonexus.Services.*.*(..))")
+    @Around("execution(* tn.esprit.spring.springbootsae3.service.*.*(..))")
     public Object profile(ProceedingJoinPoint pjp) throws Throwable {
         long start = System.currentTimeMillis();
         Object obj = pjp.proceed();

@@ -1,7 +1,8 @@
 package tn.devteam.immonexus.Repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 import tn.devteam.immonexus.Entities.Visit;
-
-public interface VisitRepository extends JpaRepository<Visit, Long> {
+@Repository
+public interface VisitRepository extends JpaRepository<Visit,Long > {
 }

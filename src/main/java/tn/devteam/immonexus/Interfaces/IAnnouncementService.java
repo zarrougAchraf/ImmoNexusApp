@@ -18,4 +18,5 @@ public interface IAnnouncementService {
 
     void removeAll();
 
+    void affectAnnouncetoUser(Long idAnnonce, String firstName, String lastName);
 }

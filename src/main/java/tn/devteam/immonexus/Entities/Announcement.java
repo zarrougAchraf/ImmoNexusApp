@@ -1,5 +1,6 @@
 package tn.devteam.immonexus.Entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -19,18 +20,24 @@ public class Announcement implements Serializable {
     private String titre;
     private String description;
     @Lob
-    private String image;
+    private byte[] image;
     private double price;
+    @Enumerated(EnumType.STRING)
     private TypeOffer offerType;
     private Integer rate;
     private boolean validity;
-  //  @Embedded
-    private String adresse;
+    @Embedded
+    private Adresse adresse;
+    @Enumerated(EnumType.STRING)
     private RealEstateType realEstateType;
     private LocalDate publicationDate;
     private double totalSurface;
     private double coveredArea;
 
 
+    @JsonIgnore
+    @ToString.Exclude
+    @ManyToOne
+    private User user;
 
 }
