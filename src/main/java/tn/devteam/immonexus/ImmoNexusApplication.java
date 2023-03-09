@@ -1,19 +1,17 @@
 package tn.devteam.immonexus;
 
+import org.apache.commons.math3.stat.regression.OLSMultipleLinearRegression;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Bean;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
+import java.util.Arrays;
 
 @SpringBootApplication
 public class ImmoNexusApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(ImmoNexusApplication.class, args);
+
     }
 
-    @Bean
-    public BCryptPasswordEncoder bCryptPasswordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
 }

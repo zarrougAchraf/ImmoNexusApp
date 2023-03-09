@@ -1,22 +1,21 @@
 package tn.devteam.immonexus.Entities;
 
-import static tn.devteam.immonexus.constant.Authority.*;
+import lombok.*;
 
-public enum Role {
-    ROLE_USER(USER_AUTHORITIES),
-    ROLE_HR(HR_AUTHORITIES),
-    ROLE_MANAGER(MANAGER_AUTHORITIES),
-    ROLE_ADMIN(ADMIN_AUTHORITIES),
-    ROLE_SUPER_ADMIN(SUPER_ADMIN_AUTHORITIES);
+import javax.persistence.*;
+import java.io.Serializable;
+@Entity
+@ToString
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+public class Role implements Serializable {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long idRole;
+    @Enumerated(EnumType.STRING)
+    private Roles role;
+    private String description;
 
-    private String[] authorities;
-
-    Role(String... authorities) {
-        this.authorities = authorities;
-    }
-
-    public String[] getAuthorities() {
-        return authorities;
-    }
 }
-
