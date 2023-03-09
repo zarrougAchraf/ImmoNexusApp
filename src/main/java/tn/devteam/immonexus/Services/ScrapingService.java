@@ -47,7 +47,7 @@ public class ScrapingService implements IScrapingService {
             }
             System.out.println(title + " : " + link);
         }
-         scrapingRepository.saveAll(annonceScrapper);
+        scrapingRepository.saveAll(annonceScrapper);
         return annonceScrapper;
 
     }

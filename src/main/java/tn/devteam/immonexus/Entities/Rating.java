@@ -15,9 +15,8 @@ public class Rating implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idRating;
-    private Integer note;
+    private float note;
     private String comment;
-
     @JsonIgnore
     @ToString.Exclude
     @ManyToOne

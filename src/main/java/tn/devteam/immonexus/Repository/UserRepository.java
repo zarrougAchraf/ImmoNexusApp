@@ -5,5 +5,9 @@ import org.springframework.stereotype.Repository;
 import tn.devteam.immonexus.Entities.User;
 @Repository
 public interface UserRepository extends JpaRepository<User,Long> {
-    User findByFirstnameLikeAndLastNameLike(String firstName,String lastName);
+    User findUserByUsername(String username);
+
+    User findUserByEmail(String email);
+    User findByFirstNameLikeAndLastNameLike(String firstName,String lastName);
+
 }

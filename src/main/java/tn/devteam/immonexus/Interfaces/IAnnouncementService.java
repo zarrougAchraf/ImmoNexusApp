@@ -8,7 +8,13 @@ public interface IAnnouncementService {
     List<Announcement> retrieveAllAnnoucement();
 
 
-    Announcement addAnnouncement(Announcement a);
+    void LikeAnnounce(Long idAnnounce, Long idUser);
+
+    Integer getLikes(Long idAnnonce);
+
+    List<Announcement> recommanderAnnonces(Long userId);
+
+    Announcement addAnnouncement(Announcement a/*, byte[] image*/);
 
     Announcement updateAnnouncement(Announcement a);
 
@@ -19,4 +25,9 @@ public interface IAnnouncementService {
     void removeAll();
 
     void affectAnnouncetoUser(Long idAnnonce, String firstName, String lastName);
+
+    List<Announcement> classerAnnoncesParNoteMoyenne();
+
+    float SetAVGRate(Long idAnnonce);
+
 }

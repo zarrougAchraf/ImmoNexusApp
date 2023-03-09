@@ -51,6 +51,4 @@ public class SponsorsService implements ISponsorsService {
 
         sponsorsRepository.deleteAll();
     }
-
-
 }

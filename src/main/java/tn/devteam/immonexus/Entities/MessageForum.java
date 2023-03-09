@@ -16,17 +16,14 @@ public class MessageForum implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idMsgForum;
     private String content;
-    private Integer likes;
-    private Integer dislikes;
 
-    @JsonIgnore
-    @ToString.Exclude
+  //  private Integer dislikes;
+
+
+
+
     @ManyToOne
+    @JoinColumn(name = "post_id")
     private SubjectForum subjectForum;
-
-    @JsonIgnore
-    @ToString.Exclude
-    @ManyToOne
-    private User user;
 
 }

@@ -15,7 +15,7 @@ public class SponsorsController {
 
 
     @PostMapping("/add-Sponsor")
-    public Sponsors addSponsor(@RequestBody Sponsors sponsor){
+    public Sponsors addSponsor( @RequestBody Sponsors sponsor){
 
         return iSponsorsService.addSponsor(sponsor);
     }
@@ -57,5 +57,4 @@ public class SponsorsController {
 
 
 
-
-    }
+}

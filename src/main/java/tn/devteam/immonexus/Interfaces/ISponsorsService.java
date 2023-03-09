@@ -5,7 +5,6 @@ import tn.devteam.immonexus.Entities.Sponsors;
 import java.util.List;
 
 public interface ISponsorsService {
-
     Sponsors addSponsor(Sponsors s);
 
     List<Sponsors> getAllSponsors();
@@ -17,4 +16,6 @@ public interface ISponsorsService {
     void deleteById(Long idSponsor);
 
     void deleteAll();
+
+
 }
