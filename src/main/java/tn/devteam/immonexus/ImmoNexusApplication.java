@@ -56,6 +56,7 @@ public class ImmoNexusApplication {
     public BCryptPasswordEncoder bCryptPasswordEncoder() {
         return new BCryptPasswordEncoder();
     }
+
 }
 
 

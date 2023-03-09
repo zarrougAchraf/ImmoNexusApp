@@ -5,6 +5,9 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 @Entity
 @ToString
 @Getter
@@ -16,17 +19,17 @@ public class MessageForum implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idMsgForum;
     private String content;
-    private Integer likes;
+    @ManyToMany(mappedBy = "likes")
+    @JsonIgnore
+    private List<User> user = new ArrayList<>();
     private Integer dislikes;
 
-    @JsonIgnore
-    @ToString.Exclude
+   // @JsonIgnore
+    //@ToString.Exclude
     @ManyToOne
+    @JoinColumn(name = "post_id")
     private SubjectForum subjectForum;
 
-    @JsonIgnore
-    @ToString.Exclude
-    @ManyToOne
-    private User user;
+    
 
 }
