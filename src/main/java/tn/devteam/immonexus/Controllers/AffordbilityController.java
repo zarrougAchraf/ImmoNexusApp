@@ -10,4 +10,6 @@ import tn.devteam.immonexus.Interfaces.IAffordabilityService;
 @RequestMapping("/Affordability")
 public class AffordbilityController {
     IAffordabilityService iAffordabilityService;
+
+
 }

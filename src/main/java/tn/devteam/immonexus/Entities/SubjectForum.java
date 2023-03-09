@@ -1,12 +1,12 @@
 package tn.devteam.immonexus.Entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
+
 @Entity
 @ToString
 @Getter
@@ -19,5 +19,16 @@ public class SubjectForum implements Serializable {
     private Long idSubjectForum;
     private String title;
     private String description;
+    @Lob
+    private byte[] image;
+
+    @JsonIgnore
+    @ToString.Exclude
+    @ManyToOne
+    private User user;
+
+
+    @OneToMany(mappedBy = "subjectForum", cascade = CascadeType.ALL)
+    private List<MessageForum> comments;
 
 }

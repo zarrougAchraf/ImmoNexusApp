@@ -19,13 +19,13 @@ public class Announcement implements Serializable {
     private String titre;
     private String description;
     @Lob
-    private byte[] image;
+    private String image;
     private double price;
     private TypeOffer offerType;
     private Integer rate;
     private boolean validity;
-    @Embedded
-    private Adresse adresse;
+  //  @Embedded
+    private String adresse;
     private RealEstateType realEstateType;
     private LocalDate publicationDate;
     private double totalSurface;
