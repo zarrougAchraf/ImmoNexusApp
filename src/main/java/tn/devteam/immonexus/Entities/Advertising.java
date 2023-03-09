@@ -1,10 +1,13 @@
 package tn.devteam.immonexus.Entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.Set;
 
 @Entity
 @ToString
@@ -17,15 +20,37 @@ public class Advertising implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idAd;
     private String title;
-    @Lob
-    private byte[] image;
-    @Lob
-    private byte[] video;
+
     private String description;
-    private String name;
     private LocalDate startDate;
     private LocalDate endDate;
-    private double cost;
+
+
+    private String image;
+
+    @Enumerated(EnumType.STRING)
+    private Canaux canaux;
+
+    private Long nbrJours;
+    private double coutParJour;
+    private double nbrVuesCible;
+    private double coutParVueCible;
+    private double gainPublicitaire;
+
+    private double nbrVuesFinal;
+
+
+
+
+
+@JsonIgnore
+@ToString.Exclude
+    @ManyToOne
+    private Sponsors sponsor;
+
+
+
+
 
     @ManyToOne
     private Sponsors sponsor;

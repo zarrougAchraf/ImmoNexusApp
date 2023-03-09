@@ -35,6 +35,11 @@ public class Affordability implements Serializable {
     @ManyToOne
     private User user ;
 
+    @JsonIgnore
+    @ToString.Exclude
+    @ManyToOne
+    private User user ;
+
 
 
 }
