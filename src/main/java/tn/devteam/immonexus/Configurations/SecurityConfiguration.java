@@ -1,6 +1,10 @@
 package tn.devteam.immonexus.Configurations;
 
 
+public class SecurityConfiguration {
+}
+
+
 //import tn.devteam.immonexus.Services.CustomOAuth2UserService;
 /*
 
