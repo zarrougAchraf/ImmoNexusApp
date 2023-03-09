@@ -13,7 +13,7 @@ import java.io.OutputStream;
 
 import static org.springframework.http.HttpStatus.FORBIDDEN;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
-import static tn.devteam.immonexus.Constant.SecurityConstant.FORBIDDEN_MESSAGE;
+import static tn.devteam.immonexus.Constant.SecurityConstantt.FORBIDDEN_MESSAGE;
 
 @Component
 public class JwtAuhenticationEntryPoint extends Http403ForbiddenEntryPoint {

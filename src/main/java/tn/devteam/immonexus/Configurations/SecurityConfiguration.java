@@ -18,7 +18,7 @@ import tn.devteam.immonexus.Filter.JwtAuhenticationEntryPoint;
 import tn.devteam.immonexus.Filter.JwtAuthorizationFilter;
 
 import static org.springframework.security.config.http.SessionCreationPolicy.STATELESS;
-import static tn.devteam.immonexus.Constant.SecurityConstant.PUBLIC_URLS;
+import static tn.devteam.immonexus.Constant.SecurityConstantt.PUBLIC_URLS;
 
 @Configuration
 @EnableWebSecurity

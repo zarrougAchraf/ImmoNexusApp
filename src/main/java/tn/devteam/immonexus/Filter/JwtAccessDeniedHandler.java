@@ -13,7 +13,7 @@ import java.io.OutputStream;
 
 import static org.springframework.http.HttpStatus.UNAUTHORIZED;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
-import static tn.devteam.immonexus.Constant.SecurityConstant.ACCESS_DENIED_MESSAGE;
+import static tn.devteam.immonexus.Constant.SecurityConstantt.ACCESS_DENIED_MESSAGE;
 
 @Component
 public class JwtAccessDeniedHandler implements AccessDeniedHandler {

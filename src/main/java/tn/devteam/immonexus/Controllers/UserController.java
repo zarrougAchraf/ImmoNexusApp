@@ -29,7 +29,7 @@ import java.util.List;
 import static org.springframework.http.HttpStatus.OK;
 import static org.springframework.http.MediaType.IMAGE_JPEG_VALUE;
 import static tn.devteam.immonexus.Constant.FileConstant.*;
-import static tn.devteam.immonexus.Constant.SecurityConstant.JWT_TOKEN_HEADER;
+import static tn.devteam.immonexus.Constant.SecurityConstantt.JWT_TOKEN_HEADER;
 
 @RestController
 @RequestMapping(path = { "/", "/user"})

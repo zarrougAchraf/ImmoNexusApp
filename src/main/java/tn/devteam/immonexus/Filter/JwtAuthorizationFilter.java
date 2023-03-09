@@ -16,8 +16,8 @@ import java.util.List;
 
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 import static org.springframework.http.HttpStatus.OK;
-import static tn.devteam.immonexus.Constant.SecurityConstant.OPTIONS_HTTP_METHOD;
-import static tn.devteam.immonexus.Constant.SecurityConstant.TOKEN_PREFIX;
+import static tn.devteam.immonexus.Constant.SecurityConstantt.OPTIONS_HTTP_METHOD;
+import static tn.devteam.immonexus.Constant.SecurityConstantt.TOKEN_PREFIX;
 
 @Component
 public class JwtAuthorizationFilter extends OncePerRequestFilter {
