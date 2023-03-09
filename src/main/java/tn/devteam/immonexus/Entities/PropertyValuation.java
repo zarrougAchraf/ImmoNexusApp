@@ -25,4 +25,11 @@ public class PropertyValuation implements Serializable {
     @Enumerated(EnumType.STRING)
     private RealEstateType propertyType;
 
+    private int bedrooms;
+    private double bathrooms;
+    private double price;
+    private double floor;
+    private double sqrt_living;
+ 
+
 }

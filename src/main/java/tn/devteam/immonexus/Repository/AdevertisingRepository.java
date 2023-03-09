@@ -11,4 +11,5 @@ import java.util.List;
 public interface AdevertisingRepository extends JpaRepository<Advertising, Long> {
     List<Advertising> findByStartDateGreaterThanEqualAndEndDateLessThanEqual(LocalDate startDate, LocalDate endDate);
 
+
 }

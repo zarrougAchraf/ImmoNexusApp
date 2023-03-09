@@ -54,6 +54,11 @@ public class User implements Serializable {
     @JsonIgnore
     @ToString.Exclude
     @OneToMany(mappedBy = "user")
+    private List<Sponsors> sponsorsList;
+
+    @JsonIgnore
+    @ToString.Exclude
+    @OneToMany(mappedBy = "user")
     private List<SubjectForum> subjectForumList;
 
     @JsonIgnore

@@ -52,4 +52,7 @@ public class Advertising implements Serializable {
 
 
 
+    @ManyToOne
+    private Sponsors sponsor;
+
 }
