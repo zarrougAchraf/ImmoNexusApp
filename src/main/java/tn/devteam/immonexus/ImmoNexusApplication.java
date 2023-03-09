@@ -2,6 +2,8 @@ package tn.devteam.immonexus;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.scheduling.annotation.EnableScheduling;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,9 +19,12 @@ import java.util.Collections;
 
 import static tn.devteam.immonexus.Constant.FileConstant.USER_FOLDER;
 
+
+@EnableScheduling
 @SpringBootApplication
 @RestController
 public class ImmoNexusApplication {
+
 
     @GetMapping
     public String welcome(){
@@ -34,6 +39,10 @@ public class ImmoNexusApplication {
         SpringApplication.run(ImmoNexusApplication.class, args);
         new File(USER_FOLDER).mkdirs();
     }
+
+
+
+
 
     @Bean
     public CorsFilter corsFilter() {
@@ -56,6 +65,7 @@ public class ImmoNexusApplication {
     public BCryptPasswordEncoder bCryptPasswordEncoder() {
         return new BCryptPasswordEncoder();
     }
+
 
 }
 

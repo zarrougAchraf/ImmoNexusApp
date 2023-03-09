@@ -1,5 +1,8 @@
 package tn.devteam.immonexus.Interfaces;
 
+
+public interface IUserService {
+
 import org.springframework.web.multipart.MultipartFile;
 import tn.devteam.immonexus.Entities.User;
 import tn.devteam.immonexus.Exception.domain.*;
@@ -27,4 +30,5 @@ public interface IUserService {
     User findUserByEmail(String email);
 
     void deleteUser(String username) throws IOException;
+
 }

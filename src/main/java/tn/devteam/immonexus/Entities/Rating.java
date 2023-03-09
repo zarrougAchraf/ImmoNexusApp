@@ -1,9 +1,11 @@
 package tn.devteam.immonexus.Entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import java.io.Serializable;
 @Entity
 @ToString
@@ -17,10 +19,5 @@ public class Rating implements Serializable {
     private Long idRating;
     private Integer note;
     private String comment;
-
-    @JsonIgnore
-    @ToString.Exclude
-    @ManyToOne
-    private Announcement announcement;
 
 }

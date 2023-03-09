@@ -6,6 +6,7 @@ import lombok.*;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.Set;
 
 @Entity
 @ToString
@@ -18,17 +19,32 @@ public class Visit implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idVisit;
     private LocalDate visitDate;
-    @Embedded
-    private Adresse adresse;
+
     private double duration;
+    @Enumerated(EnumType.STRING)
+    private VisitType visitType;
 
+    @Enumerated(EnumType.STRING)
+    private VisitStatus visitStatus;
+
+    private float visitPrice;
+
+    @Embedded
+    private VisitAdress visitAdress;
+
+
+    @ManyToMany(cascade =CascadeType.ALL)
     @JsonIgnore
     @ToString.Exclude
-    @ManyToOne
-    private User user;
+    private Set<User> user ;
 
-    @JsonIgnore
-    @ToString.Exclude
-    @ManyToOne
-    private Announcement announcement;
+
+ /*   @ManyToOne(cascade = CascadeType.ALL)
+    Announcement announcement;
+*/
+
+
+
+
+
 }

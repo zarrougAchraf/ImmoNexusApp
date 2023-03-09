@@ -10,8 +10,10 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
+
 import java.time.LocalDate;
 import java.util.Date;
+
 import java.util.List;
 
 @Entity
@@ -20,6 +22,14 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+public class User  implements Serializable {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    private String email;
+
 public class User implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -33,6 +43,9 @@ public class User implements Serializable {
     private String firstName;
     @Column(nullable = false ,length = 20)
     private String lastName;
+
+    private String password;
+
     @Column(nullable = false ,length = 20)
     private String username;
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
@@ -41,14 +54,12 @@ public class User implements Serializable {
     @Email(message = "L'adresse e-mail n'est pas valide")
     private String email;
     @URL(message = "L'URL de l'image de profil n'est pas valide")
+
     private String profileImageUrl;
-    private Date lastLoginDate;
-    private Date lastLoginDateDisplay;
-    private Date joinDate;
-    private String role; //ROLE_USER{ read, edit }, ROLE_ADMIN {delete}
-    private String[] authorities;
-    private boolean isActive;
-    private boolean isNotLocked;
+
+
+    @Embedded
+    private UserAdress userAdress;
 
 
 
@@ -62,48 +73,27 @@ public class User implements Serializable {
     @OneToMany(mappedBy = "user")
     private List<Sponsors> sponsorsList;
 
-    @JsonIgnore
-    @ToString.Exclude
-    @OneToMany(mappedBy = "user")
-    private List<SubjectForum> subjectForumList;
 
-    @JsonIgnore
-    @ToString.Exclude
-    @OneToMany(mappedBy = "user")
-    private List<Announcement> announcementList;
+  @Enumerated(EnumType.STRING)
+   private Roles role;
 
-    @JsonIgnore
-    @ToString.Exclude
-    @OneToMany(mappedBy = "user")
-    private List<Visit> visitList;
+    public User(String email, String name, String pictureUrl) {
 
-    @JsonIgnore
-    @ToString.Exclude
-    @OneToMany(mappedBy = "user")
-    private List<Scraping> scrapingList;
+        this.email=email;
+        this.lastName=name;
+        this.profileImageUrl=pictureUrl;
+    }
 
-    @JsonIgnore
-    @ToString.Exclude
-    @OneToMany
-    private List<Rating> ratingList;
 
-    @JsonIgnore
-    @ToString.Exclude
-    @OneToMany(mappedBy = "user")
-    private List<Claim> claimList;
 
+    @ManyToMany(mappedBy="user")
     @JsonIgnore
     @ToString.Exclude
-    @OneToMany(mappedBy = "user")
-    private List<Mortgage> mortgageList;
+    private List<Visit> visit ;
 
-    @JsonIgnore
-    @ToString.Exclude
-    @ManyToMany
-    private List<GroupAuction> groupAuctionList;
 
-    @JsonIgnore
-    @ToString.Exclude
-    @OneToMany(mappedBy = "user")
-    private List<Affordability> affordabilityList;
+
+
+
 }
+
