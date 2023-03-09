@@ -3,13 +3,11 @@ package tn.devteam.immonexus.Controllers;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import tn.devteam.immonexus.Interfaces.IAffordabilityService;
+import tn.devteam.immonexus.Interfaces.IRoleService;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping("/Affordability")
-public class AffordbilityController {
-    IAffordabilityService iAffordabilityService;
-
-
+@RequestMapping("/Role")
+public class RoleController {
+    IRoleService iRoleService;
 }

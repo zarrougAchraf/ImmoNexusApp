@@ -21,17 +21,18 @@ public class Mortgage implements Serializable {
     private RealEstateType realEstateType;
     private double loanAmount;
     private double downPayment;
-    private int loanPeriode;
+    private double interestRate;
+    private double duration;
+    private LocalDate startDate;
+    private LocalDate endDate;
     @Embedded
     private Adresse adresse;
-    @OneToOne
-    private MortgageParameters mortgageParameters;
+    private double mensuelInvome;
 
     @JsonIgnore
     @ToString.Exclude
     @ManyToOne
     private User user;
-
 
 
 }

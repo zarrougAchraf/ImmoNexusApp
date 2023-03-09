@@ -1,3 +1,4 @@
+
 package tn.devteam.immonexus.Controllers;
 
 import com.itextpdf.text.*;
@@ -5,6 +6,7 @@ import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -23,7 +25,6 @@ import tn.devteam.immonexus.Interfaces.IFileUploadService;
 import tn.devteam.immonexus.Repository.AdevertisingRepository;
 import tn.devteam.immonexus.Repository.SponsorsRepository;
 import tn.devteam.immonexus.Services.EmailService;
-import tn.devteam.immonexus.Services.EmailServicee;
 
 import javax.mail.SendFailedException;
 import javax.servlet.http.HttpServletRequest;
@@ -37,13 +38,14 @@ import java.util.stream.Collectors;
 @RestController
 @AllArgsConstructor
 @RequestMapping("/Advertising")
+@Slf4j
 public class AdvertisingController {
     IAdvertisingService iAdvertisingService;
     IFileUploadService iFileUploadService;
     @Autowired
     AdevertisingRepository adevertisingRepository;
     @Autowired
-    private EmailServicee emailsend;
+    private EmailService emailsend;
     @Autowired
     SponsorsRepository sponsorsRepository;
 
@@ -59,19 +61,19 @@ public class AdvertisingController {
 
                                        @RequestParam("endDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate
 
-    ) throws IOException {
+                                       ) throws IOException {
 
-        LocalDate startDate=LocalDate.now();
+         LocalDate startDate=LocalDate.now();
         if (endDate.isBefore(startDate)) {
             throw new DateValidationException("La date de fin doit être postérieure à la date de début.");
         }
-        Advertising advertising=new Advertising();
-        advertising.setDescription(description);
+       Advertising advertising=new Advertising();
+       advertising.setDescription(description);
         advertising.setCanaux(canaux);
         advertising.setTitle(title);
 
-        advertising.setStartDate(startDate);
-        advertising.setEndDate(endDate);
+       advertising.setStartDate(startDate);
+       advertising.setEndDate(endDate);
 
         //log.info("seiiiif :"+image.getOriginalFilename());
         iFileUploadService.uploadfile(image);
@@ -92,7 +94,7 @@ public class AdvertisingController {
         advertising.setSponsor(sponsor);
 
 
-        try {
+       try {
             emailsend.sendEmail(advertising.getSponsor().getEmail(),
                     "a propos l'ajout de votre pub",
                     "Bonjour " + advertising.getSponsor().getName()
@@ -129,7 +131,7 @@ public class AdvertisingController {
 
     }
 
-    // get all pub valid et non valid
+// get all pub valid et non valid
     @GetMapping("/get-All-Actual-Advertising/{start}/{end}")
     public ResponseEntity<?> getAllActualAdvertising(@RequestParam("start") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
                                                      @RequestParam("end") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate,
@@ -144,13 +146,13 @@ public class AdvertisingController {
         List<Advertising> advertisings = iAdvertisingService.getAllActualAdvertising(startDate, endDate,request);
 
 
-       /* List<Advertising> validAdvertisings = advertisings.stream()
+        List<Advertising> validAdvertisings = advertisings.stream()
                 .filter(advertising -> advertising.getEndDate().isAfter(currentDate))
-                .collect(Collectors.toList());*/
+                .collect(Collectors.toList());
 
 
         if (!advertisings.isEmpty()) {
-            return ResponseEntity.ok(advertisings);
+            return ResponseEntity.ok(validAdvertisings);
         } else {
             String message = "Aucune publicité trouvée pour les dates spécifiées";
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(message);
@@ -318,4 +320,4 @@ public class AdvertisingController {
 
 
 
-}
+    }

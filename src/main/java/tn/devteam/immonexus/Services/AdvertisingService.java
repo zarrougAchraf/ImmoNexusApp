@@ -1,6 +1,5 @@
 package tn.devteam.immonexus.Services;
 
-
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -34,21 +33,21 @@ public class AdvertisingService implements IAdvertisingService {
 
 
     @Override
-    public String nbrAdvertisingsBySponsor(){
+public String nbrAdvertisingsBySponsor(){
 
-        List<Sponsors> sponsorsList =sponsorsRepository.findAll();
+      List<Sponsors> sponsorsList =sponsorsRepository.findAll();
 
         int n = 0;
         Sponsors sponsors = new Sponsors();
 
         for (Sponsors s : sponsorsList){
             for (Sponsors sp : sponsorsList) {
-                if (sp.getAdvertisingList().size()>s.getAdvertisingList().size()) {
-                    n=sp.getAdvertisingList().size();
-                    sponsors=sp;
-                    log.info("fdfg"+n);
+                   if (sp.getAdvertisingList().size()>s.getAdvertisingList().size()) {
+                       n=sp.getAdvertisingList().size();
+                       sponsors=sp;
+                      // log.info("fdfg"+n);
+                   }
                 }
-            }
 
         }
         return("le sponsor qui a le plus nbre des publicites "+sponsors.getName()+"a comme nbr"+ n) ;
@@ -76,8 +75,8 @@ public class AdvertisingService implements IAdvertisingService {
     }
     @Override
     public Long calculerNbreDesJours(Advertising advertising) {
-        LocalDate startDate = advertising.getStartDate();
-        LocalDate endDate = advertising.getEndDate();
+         LocalDate startDate = advertising.getStartDate();
+         LocalDate endDate = advertising.getEndDate();
 
         long nbrJours = ChronoUnit.DAYS.between(startDate, endDate);
 
@@ -102,7 +101,7 @@ public class AdvertisingService implements IAdvertisingService {
         for (Advertising advertissing : advertisings) {
             incrementerNombreDeVue(advertissing.getIdAd(), request);
         }
-        return advertisings;
+            return advertisings;
     }
     @Override
     public void incrementerNombreDeVue(Long id, HttpServletRequest request) {
@@ -154,6 +153,9 @@ public class AdvertisingService implements IAdvertisingService {
     }*/
 
 // ******************************
+
+
+
 
 
 

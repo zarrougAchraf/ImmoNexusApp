@@ -7,7 +7,6 @@ import java.time.LocalDate;
 import java.util.List;
 
 public interface IAdvertisingService {
-
     String nbrAdvertisingsBySponsor();
 
     Advertising addAdvertising(Advertising ad);
@@ -28,9 +27,14 @@ public interface IAdvertisingService {
 
     void deleteAll();
 
-    //  void affectAdvertisingToSponsor(Long idSponsor, Long idAd);
+  //  void affectAdvertisingToSponsor(Long idSponsor, Long idAd);
+
+
+
+
+
+
 
 
     List<Advertising> getAllActualAdvertising(LocalDate startDate, LocalDate endDate,HttpServletRequest request);
-
 }

@@ -15,21 +15,14 @@ public class Affordability implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idAffordability;
-
-
+    private String annualInvome;
+    private double downPayment;
     private double creditScore;
-
-    private double loanAmount;
+    private double mensualExpenses;
+    private double interestRate;
     private long loanTerme;
+    private String insurance;
 
-    private double monthlyIncome;
-
-    private double monthlyDebtPayments;
-
-    private double homeownersInsuranceRate;
-    private double otherMonthlyExpenses;
-    @OneToOne
-    private MortgageParameters mortgageParameters;
     @JsonIgnore
     @ToString.Exclude
     @ManyToOne

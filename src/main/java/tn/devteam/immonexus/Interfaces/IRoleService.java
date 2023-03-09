@@ -1,4 +1,4 @@
 package tn.devteam.immonexus.Interfaces;
 
-public interface IVisitService {
+public interface IRoleService {
 }
