@@ -1,3 +1,6 @@
+package tn.devteam.immonexus.exception.domain;
+
+public class UsernameExistException {
 package tn.devteam.immonexus.Exception.domain;
 
 

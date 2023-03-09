@@ -1,3 +1,8 @@
+
+package tn.devteam.immonexus.exception;
+
+public class ExceptionHandling {
+
 package tn.devteam.immonexus.Exception;
 
 import com.auth0.jwt.exceptions.TokenExpiredException;
@@ -131,4 +136,5 @@ public class ExceptionHandling implements ErrorController {
     public String getErrorPath() {
         return ERROR_PATH;
     }
+
 }
