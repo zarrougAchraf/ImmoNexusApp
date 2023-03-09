@@ -1,5 +1,13 @@
 package tn.devteam.immonexus.Configurations;
 
+
+public class SecurityConfiguration {
+}
+
+
+//import tn.devteam.immonexus.Services.CustomOAuth2UserService;
+/*
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
@@ -13,27 +21,30 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import tn.devteam.immonexus.Security.JwtAccessDeniedHandler;
-import tn.devteam.immonexus.Security.JwtAuthenticationEntryPoint;
-import tn.devteam.immonexus.Security.JwtAuthorizationFilter;
+import tn.devteam.immonexus.Filter.JwtAccessDeniedHandler;
+import tn.devteam.immonexus.Filter.JwtAuhenticationEntryPoint;
+import tn.devteam.immonexus.Filter.JwtAuthorizationFilter;
 
 import static org.springframework.security.config.http.SessionCreationPolicy.STATELESS;
-import static tn.devteam.immonexus.constant.SecurityConstant.PUBLIC_URLS;
+import static tn.devteam.immonexus.Constant.SecurityConstantt.PUBLIC_URLS;
 
 @Configuration
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
+
+    @Autowired
+    private CustomOAuth2UserService oauthUserService;
+
     private JwtAuthorizationFilter jwtAuthorizationFilter;
     private JwtAccessDeniedHandler jwtAccessDeniedHandler;
-    private JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
+    private JwtAuhenticationEntryPoint jwtAuthenticationEntryPoint;
     private UserDetailsService userDetailsService;
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Autowired
     public SecurityConfiguration(JwtAuthorizationFilter jwtAuthorizationFilter,
                                  JwtAccessDeniedHandler jwtAccessDeniedHandler,
-                                 JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint,
+                                 JwtAuhenticationEntryPoint jwtAuthenticationEntryPoint,
                                  @Qualifier("userDetailsService")UserDetailsService userDetailsService,
                                  BCryptPasswordEncoder bCryptPasswordEncoder) {
         this.jwtAuthorizationFilter = jwtAuthorizationFilter;
@@ -48,23 +59,17 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         auth.userDetailsService(userDetailsService).passwordEncoder(bCryptPasswordEncoder);
     }
 
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.csrf().disable().cors().and()
-                .sessionManagement().sessionCreationPolicy(STATELESS)
-                .and().authorizeRequests().antMatchers(PUBLIC_URLS).permitAll()
+        http.authorizeRequests()
+                .antMatchers("/").permitAll()
                 .anyRequest().authenticated()
                 .and()
-                .exceptionHandling().accessDeniedHandler(jwtAccessDeniedHandler)
-                .authenticationEntryPoint(jwtAuthenticationEntryPoint)
-                .and()
-                .addFilterBefore(jwtAuthorizationFilter, UsernamePasswordAuthenticationFilter.class);
+                .oauth2Login()
+                .userInfoEndpoint().userService(oauthUserService);
     }
 
-    @Bean
-    @Override
-    public AuthenticationManager authenticationManagerBean() throws Exception {
-        return super.authenticationManagerBean();
-    }
 
 }
+
