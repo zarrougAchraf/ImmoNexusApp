@@ -36,13 +36,7 @@ public class AnnouncementController {
     public void removeAll() {
         iAnnouncementService.removeAll();
     }
-    @PutMapping("/affectAnnonce-to-user/{idA}/{fName}/{lName}")
-    public void affectAnnouncetoUser(@PathVariable("idA") Long idAnnonce,
-                                     @PathVariable("fName") String firstName,
-                                     @PathVariable("lName") String lastName){
-        iAnnouncementService.affectAnnouncetoUser(idAnnonce,firstName,lastName);
 
-    }
     @GetMapping("/get-All-Announcement")
    public List<Announcement> retrieveAllAnnoucement(){
         return iAnnouncementService.retrieveAllAnnoucement();
