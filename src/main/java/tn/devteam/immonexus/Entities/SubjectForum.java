@@ -19,15 +19,16 @@ public class SubjectForum implements Serializable {
     private Long idSubjectForum;
     private String title;
     private String description;
+    @Lob
+    private byte[] image;
 
     @JsonIgnore
     @ToString.Exclude
     @ManyToOne
     private User user;
 
-    @JsonIgnore
-    @ToString.Exclude
-    @OneToMany(mappedBy = "subjectForum")
-    private List<MessageForum> messageForumList;
+
+    @OneToMany(mappedBy = "subjectForum", cascade = CascadeType.ALL)
+    private List<MessageForum> comments;
 
 }
