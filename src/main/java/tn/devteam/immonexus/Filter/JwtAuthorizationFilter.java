@@ -1,10 +1,11 @@
-package tn.devteam.immonexus.Security;
+package tn.devteam.immonexus.Filter;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
+import tn.devteam.immonexus.Utility.JWTTokenProvider;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -15,8 +16,8 @@ import java.util.List;
 
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 import static org.springframework.http.HttpStatus.OK;
-import static tn.devteam.immonexus.constant.SecurityConstant.OPTIONS_HTTP_METHOD;
-import static tn.devteam.immonexus.constant.SecurityConstant.TOKEN_PREFIX;
+import static tn.devteam.immonexus.Constant.SecurityConstantt.OPTIONS_HTTP_METHOD;
+import static tn.devteam.immonexus.Constant.SecurityConstantt.TOKEN_PREFIX;
 
 @Component
 public class JwtAuthorizationFilter extends OncePerRequestFilter {

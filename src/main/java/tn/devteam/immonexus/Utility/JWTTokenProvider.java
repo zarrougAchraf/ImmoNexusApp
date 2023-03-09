@@ -1,4 +1,4 @@
-package tn.devteam.immonexus.Security;
+package tn.devteam.immonexus.Utility;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
@@ -22,13 +22,15 @@ import java.util.stream.Collectors;
 
 import static com.auth0.jwt.algorithms.Algorithm.HMAC512;
 import static java.util.Arrays.stream;
-import static tn.devteam.immonexus.constant.SecurityConstant.*;
+import static tn.devteam.immonexus.Constant.SecurityConstantt.*;
 
 @Component
 public class JWTTokenProvider {
+
     @Value("${jwt.secret}")
     private String secret;
 
+    // after being authenticated generate token
     public String generateJwtToken(UserPrincipal userPrincipal) {
         String[] claims = getClaimsFromUser(userPrincipal);
         return JWT.create().withIssuer(GET_ARRAYS_LLC).withAudience(GET_ARRAYS_ADMINISTRATION)
@@ -36,12 +38,14 @@ public class JWTTokenProvider {
                 .withArrayClaim(AUTHORITIES, claims).withExpiresAt(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
                 .sign(HMAC512(secret.getBytes()));
     }
+    // from the token we gona take all the autorities
 
     public List<GrantedAuthority> getAuthorities(String token) {
         String[] claims = getClaimsFromToken(token);
         return stream(claims).map(SimpleGrantedAuthority::new).collect(Collectors.toList());
     }
 
+    // get authentication after verifing the token
     public Authentication getAuthentication(String username, List<GrantedAuthority> authorities, HttpServletRequest request) {
         UsernamePasswordAuthenticationToken userPasswordAuthToken = new
                 UsernamePasswordAuthenticationToken(username, null, authorities);
@@ -49,6 +53,7 @@ public class JWTTokenProvider {
         return userPasswordAuthToken;
     }
 
+    // check if the token is valid
     public boolean isTokenValid(String username, String token) {
         JWTVerifier verifier = getJWTVerifier();
         return StringUtils.isNotEmpty(username) && !isTokenExpired(verifier, token);
@@ -59,6 +64,7 @@ public class JWTTokenProvider {
         return verifier.verify(token).getSubject();
     }
 
+    // see if the token is not expired 5 day
     private boolean isTokenExpired(JWTVerifier verifier, String token) {
         Date expiration = verifier.verify(token).getExpiresAt();
         return expiration.before(new Date());
@@ -87,5 +93,4 @@ public class JWTTokenProvider {
         }
         return authorities.toArray(new String[0]);
     }
-
 }

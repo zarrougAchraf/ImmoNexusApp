@@ -13,12 +13,12 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import tn.devteam.immonexus.Security.JwtAccessDeniedHandler;
-import tn.devteam.immonexus.Security.JwtAuthenticationEntryPoint;
-import tn.devteam.immonexus.Security.JwtAuthorizationFilter;
+import tn.devteam.immonexus.Filter.JwtAccessDeniedHandler;
+import tn.devteam.immonexus.Filter.JwtAuhenticationEntryPoint;
+import tn.devteam.immonexus.Filter.JwtAuthorizationFilter;
 
 import static org.springframework.security.config.http.SessionCreationPolicy.STATELESS;
-import static tn.devteam.immonexus.constant.SecurityConstant.PUBLIC_URLS;
+import static tn.devteam.immonexus.Constant.SecurityConstantt.PUBLIC_URLS;
 
 @Configuration
 @EnableWebSecurity
@@ -26,14 +26,14 @@ import static tn.devteam.immonexus.constant.SecurityConstant.PUBLIC_URLS;
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     private JwtAuthorizationFilter jwtAuthorizationFilter;
     private JwtAccessDeniedHandler jwtAccessDeniedHandler;
-    private JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
+    private JwtAuhenticationEntryPoint jwtAuthenticationEntryPoint;
     private UserDetailsService userDetailsService;
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Autowired
     public SecurityConfiguration(JwtAuthorizationFilter jwtAuthorizationFilter,
                                  JwtAccessDeniedHandler jwtAccessDeniedHandler,
-                                 JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint,
+                                 JwtAuhenticationEntryPoint jwtAuthenticationEntryPoint,
                                  @Qualifier("userDetailsService")UserDetailsService userDetailsService,
                                  BCryptPasswordEncoder bCryptPasswordEncoder) {
         this.jwtAuthorizationFilter = jwtAuthorizationFilter;
@@ -66,5 +66,4 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     public AuthenticationManager authenticationManagerBean() throws Exception {
         return super.authenticationManagerBean();
     }
-
 }

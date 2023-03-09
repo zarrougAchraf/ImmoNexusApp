@@ -1,4 +1,4 @@
-package tn.devteam.immonexus.Security;
+package tn.devteam.immonexus.Filter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.security.core.AuthenticationException;
@@ -13,10 +13,10 @@ import java.io.OutputStream;
 
 import static org.springframework.http.HttpStatus.FORBIDDEN;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
-import static tn.devteam.immonexus.constant.SecurityConstant.FORBIDDEN_MESSAGE;
+import static tn.devteam.immonexus.Constant.SecurityConstantt.FORBIDDEN_MESSAGE;
 
 @Component
-public class JwtAuthenticationEntryPoint extends Http403ForbiddenEntryPoint {
+public class JwtAuhenticationEntryPoint extends Http403ForbiddenEntryPoint {
 
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException {

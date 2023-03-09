@@ -1,11 +1,11 @@
 package tn.devteam.immonexus.Entities;
 
-import static tn.devteam.immonexus.constant.Authority.*;
+import static tn.devteam.immonexus.Constant.Authority.*;
 
 public enum Role {
     ROLE_USER(USER_AUTHORITIES),
-    ROLE_HR(HR_AUTHORITIES),
-    ROLE_MANAGER(MANAGER_AUTHORITIES),
+    ROLE_MODERATOR(MODERATOR_AUTHORITIES),
+    ROLE_BANK(BANK_AUTHORITIES),
     ROLE_ADMIN(ADMIN_AUTHORITIES),
     ROLE_SUPER_ADMIN(SUPER_ADMIN_AUTHORITIES);
 
